@@ -297,8 +297,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     backgroundImage: {
-        flex: 1,
-        width: '100%',
+     flex: 1, width: '100 %',opacity:0.3
     },
     overlayImage: {
         flex: 1,
@@ -321,7 +320,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.05,
     },
     backgroundImageStyle: {
-        opacity: 0.1,
+        opacity: 0.5,
     },
     mainDropdownWrapper: {
         paddingTop: height * 0.046,
@@ -362,7 +361,7 @@ const styles = StyleSheet.create({
     mainDropdownText: {
         color: 'white',
         fontWeight: 'bold',
-        fontSize: width * 0.07,
+        fontSize: width * 0.065,
         marginLeft: width * 0.05,
     },
     arrow: {
@@ -450,7 +449,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         paddingVertical: height * 0.015,
-        marginTop: width * 0.38,
+        marginTop: width * 0.34,
         backgroundColor: '#f0f0f0',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },

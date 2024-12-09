@@ -57,7 +57,7 @@ export default function AccountConfirmation() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/background.jpg')}
+        source={require('../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
+    opacity:0.3,
   },
 
   scrollContent: {

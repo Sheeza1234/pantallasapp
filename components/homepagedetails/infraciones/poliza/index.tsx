@@ -54,7 +54,7 @@ export default function PolizasInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../../assets/images/background.jpg')}
+                source={require('../../../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
                 resizeMode="cover"
