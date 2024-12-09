@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,8 +8,10 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
+import { ChevronDown, ChevronUp } from 'react-native-feather';
 import * as ImagePicker from 'expo-image-picker';
 
 const { width, height } = Dimensions.get('window');
@@ -25,6 +27,12 @@ export default function SeguoInfoScreen() {
     const toggleMainDropdown1 = () => {
         setIsMainDropdownOpen1(!isMainDropdownOpen1)
     }
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
+
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const pickImage = async () => {
@@ -50,7 +58,7 @@ export default function SeguoInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../../assets/images/background.jpg')}
+                source={require('../../../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
                 resizeMode="cover"
@@ -65,7 +73,11 @@ export default function SeguoInfoScreen() {
                         <Text style={styles.subDropdownText}>
                             Seguro del Vehiculo
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown
+                            width={width * 0.09}
+                            height={width * 0.09}
+                            color="#0066FF"
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity style={[
                         styles.subDropdown,
@@ -76,7 +88,19 @@ export default function SeguoInfoScreen() {
                         <Text style={styles.subDropdownText}>
                             Alfa Romeo              AA275HT
                         </Text>
-                        <Text style={styles.arrows}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
+                        <Text style={styles.arrows}>{isMainDropdownOpen ? (
+                            <ChevronUp
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
+                        ) : (
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
+                        )}</Text>
                     </TouchableOpacity>
                     {isMainDropdownOpen && (
                         <View>
@@ -99,7 +123,19 @@ export default function SeguoInfoScreen() {
                         <Text style={styles.subDropdownText}>
                             Toyota                        AB369ES
                         </Text>
-                        <Text style={styles.arrows}>{isMainDropdownOpen1 ? '▲' : '▼'}</Text>
+                        <Text style={styles.arrows}>{isMainDropdownOpen1 ? (
+                            <ChevronUp
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
+                        ) : (
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
+                        )}</Text>
                     </TouchableOpacity>
                     {isMainDropdownOpen1 && (
                         <View>
@@ -128,7 +164,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.1,
+        opacity: 0.3,
     },
     borderedContainer: {
         flex: 1,

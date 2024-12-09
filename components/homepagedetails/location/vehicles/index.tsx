@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
 import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../../navbar';
@@ -27,12 +27,17 @@ interface Document {
     licensePlate: string;
 }
 
+
 const { width, height } = Dimensions.get('window')
 export default function LvehicleInfoScreen() {
     const [isMainDropdownOpen, setIsMainDropdownOpen] = useState(false);
     const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(null);
     const navigation = useNavigation<NavigationProps>();
-
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     const toggleMainDropdown = () => {
         setIsMainDropdownOpen((prev) => !prev);
@@ -62,10 +67,10 @@ export default function LvehicleInfoScreen() {
                             />
                         </View>
 
-                        {/* MIS VEHÍCULOS Container */}
+
                         <TouchableOpacity style={styles.mainDropdown} onPress={toggleMainDropdown}>
                             <Text style={styles.mainDropdownText}>GEOLOCALIZACION</Text>
-                            <Text style={styles.arrow}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
+
                         </TouchableOpacity>
 
 
@@ -79,19 +84,21 @@ export default function LvehicleInfoScreen() {
                                         style={styles.itemIcon}
                                     />  Mis Vehiculos
                                 </Text>
-                                <Text style={styles.arrow}>▲</Text>
+                                <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                             </TouchableOpacity>
                             <View>
                                 <TouchableOpacity style={styles.subDropdown1} onPress={() => { navigation.navigate('Romeo') }}>
                                     <Text style={styles.subDropdownText1}>
                                         Alfa Romeo           AA275HT
-                                        <Text style={styles.arrow}> ▲</Text>                                 </Text>
+                                    </Text>
+                                    <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.subDropdown1}  >
                                     <Text style={styles.subDropdownText1}>
                                         Toyota                    AB369ES
-                                        <Text style={styles.arrow}>  ▲</Text>
+
                                     </Text>
+                                    <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                                 </TouchableOpacity>
 
 
@@ -147,8 +154,8 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     iconContainer: {
-        width: width * 0.18,
-        height: width * 0.18,
+        width: width * 0.16,
+        height: width * 0.16,
         borderRadius: width * 0.1,
         backgroundColor: 'white',
         alignItems: 'center',
@@ -178,8 +185,8 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     iconImage: {
-        width: width * 0.4,
-        height: height * 0.1,
+        width: width * 0.6,
+        height: height * 0.08,
         resizeMode: 'contain',
     },
     mainDropdownText: {

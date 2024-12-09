@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
     SafeAreaView,
     View,
@@ -9,6 +9,7 @@ import {
     ImageBackground,
     Dimensions,
     Platform,
+    StatusBar
 } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
@@ -23,6 +24,11 @@ export default function SMSVerificationScreen() {
     const navigation = useNavigation<NavigationProps>();
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef<Array<TextInput | null>>([]);
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     const handleCodeChange = (text: string, index: number) => {
         const newCode = [...code];
@@ -50,7 +56,7 @@ export default function SMSVerificationScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../assets/images/background.jpg')}
+                source={require('../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
             >
@@ -91,13 +97,12 @@ export default function SMSVerificationScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
     },
     background: {
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.1,
+        opacity: 0.3
     },
     content: {
         flex: 1,

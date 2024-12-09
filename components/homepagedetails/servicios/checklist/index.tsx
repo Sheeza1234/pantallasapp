@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,6 +8,7 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
 import * as ImagePicker from 'expo-image-picker';
@@ -16,28 +17,32 @@ const { width, height } = Dimensions.get('window');
 
 export default function CheckListInfoScreen() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
     const pickImage = async () => {
         // Request permissions to access media library
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
+
         if (permissionResult.granted === false) {
-          alert('Permission to access gallery is required!');
-          return;
+            alert('Permission to access gallery is required!');
+            return;
         }
-    
+
         // Open image picker
         const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
         });
-    
+
         if (!result.canceled && result.assets?.[0]?.uri) {
-          setSelectedImage(result.assets[0].uri); // Set selected image URI
+            setSelectedImage(result.assets[0].uri); // Set selected image URI
         }
-      };
-    
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
@@ -53,52 +58,52 @@ export default function CheckListInfoScreen() {
                     </View>
 
                     <TouchableOpacity style={styles.subDropdown} >
-                    <Image
-                                source={require('../../../../assets/images/Iconos/checklist.png')}
-                                style={styles.icon}
-                            />
+                        <Image
+                            source={require('../../../../assets/images/Iconos/checklist.png')}
+                            style={styles.icon}
+                        />
                         <Text style={styles.subDropdownText}>
-                        Check List Pre - Viaje
+                            Check List Pre - Viaje
                         </Text>
                         <Text style={styles.arrows}>▲</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.subDropdown1} >
                         <Text style={styles.subDropdownText1}>
-                           Alfa Romeo  AA275HT
+                            Alfa Romeo  AA275HT
                         </Text>
                         <Text style={styles.arrows}>▲</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.subDropdown1} >
                         <Text style={styles.subDropdownText1}>
-                           Recorrido Mayor a 2000km
+                            Recorrido Mayor a 2000km
                         </Text>
                         <Text style={styles.arrows}>▲</Text>
                     </TouchableOpacity>
                     <View>
-                            <TouchableOpacity style={styles.subDropdown2} onPress={pickImage}>
+                        <TouchableOpacity style={styles.subDropdown2} onPress={pickImage}>
                             <Text style={styles.subDropdownText2}>
-                            Recomendaciones
-                        </Text>
-                        <Text style={styles.arrows}>▲</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
+                                Recomendaciones
+                            </Text>
+                            <Text style={styles.arrows}>▲</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
                             <Text style={styles.subDropdownText3}>
-                            Ver Pronostico Meteorlogica
-                        </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
+                                Ver Pronostico Meteorlogica
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
                             <Text style={styles.subDropdownText3}>
-                            GPS-Bajar Mapa de Ruta de recorrido
-                        </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
+                                GPS-Bajar Mapa de Ruta de recorrido
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown3} onPress={pickImage}>
                             <Text style={styles.subDropdownText3}>
-                            Tener presente la existencia de estaciones de servicio para cargar combustible, de acuredo al recorrido a realizer
-                        </Text>
-                            </TouchableOpacity>
-                        </View>
+                                Tener presente la existencia de estaciones de servicio para cargar combustible, de acuredo al recorrido a realizer
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
 
-                
+
                 </View>
             </ImageBackground>
             <Navbar />
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#0066FF',
         borderRadius: 15,
-        width: width*0.85,
+        width: width * 0.85,
     },
     subDropdownText1: {
         fontSize: width * 0.05,
@@ -189,10 +194,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: height * 0.01,
         margin: width * 0.01,
-        marginLeft: width*0.18,
+        marginLeft: width * 0.18,
         backgroundColor: '#0066FF',
         borderRadius: 15,
-        width: width*0.68,
+        width: width * 0.68,
     },
     subDropdownText3: {
         fontSize: width * 0.05,
@@ -209,7 +214,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#0066FF',
         borderWidth: 1,
         borderRadius: 15,
-        width: width*0.85,
+        width: width * 0.85,
     },
     subDropdownText2: {
         fontSize: width * 0.05,
@@ -225,7 +230,7 @@ const styles = StyleSheet.create({
     arrows: {
         fontSize: width * 0.07,
         color: '#B7B7B7',
-        
+
     },
     imageContainer: {
         alignItems: 'center',

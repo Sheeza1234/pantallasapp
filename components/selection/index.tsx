@@ -1,128 +1,124 @@
 import React from 'react';
 import {
-    SafeAreaView,
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    Dimensions,
-    ImageBackground,
-    Image
+  SafeAreaView,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  ImageBackground,
+  Image, StatusBar
 } from 'react-native';
-import Svg, { Circle, Text as SvgText } from 'react-native-svg';
 import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Login'>;
-
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default function LanguageSelect() {
-    const navigation = useNavigation<NavigationProps>();
-    const handleLanguageSelect = (language: string) => {
-        navigation.navigate('Login');
+  const navigation = useNavigation<NavigationProps>();
+  const handleLanguageSelect = (language: string) => {
+    navigation.navigate('Login');
 
-    };
+  };
 
-    return (
-        <SafeAreaView style={styles.container}>
-            <ImageBackground
-                source={require('../../assets/images/background.jpg')}
-                style={styles.backgroundImage}
-                resizeMode="cover"
-            >
-                {/* Translucent overlay */}
-                <View style={styles.overlay} />
-                <View style={styles.borderedContainer}>
-                    <View style={styles.content}>
-                        {/* VIP Logo */}
-                        <View style={styles.logoContainer}>
-                            <Image
-                                source={require('../../assets/images/mainlogo.png')}
-                                style={styles.image} />
-                        </View>
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
 
-                        {/* Language Buttons */}
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => handleLanguageSelect('es')}
-                            >
-                                <Text style={styles.buttonText}>Español</Text>
-                            </TouchableOpacity>
+  return (
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        source={require('../../assets/images/background.jpg')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      >
+        <View style={styles.borderedContainer}>
+          <View style={styles.content}>
+            {/* VIP Logo */}
+            <View>
+              <Image
+                source={require('../../assets/images/mainlogo.png')}
+                style={styles.image} />
+            </View>
 
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => handleLanguageSelect('en')}
-                            >
-                                <Text style={styles.buttonText}>English</Text>
-                            </TouchableOpacity>
+            {/* Language Buttons */}
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLanguageSelect('es')}
+              >
+                <Text style={styles.buttonText}>Español</Text>
+              </TouchableOpacity>
 
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => handleLanguageSelect('pt')}
-                            >
-                                <Text style={styles.buttonText}>Português</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            </ImageBackground>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLanguageSelect('en')}
+              >
+                <Text style={styles.buttonText}>English</Text>
+              </TouchableOpacity>
 
-        </SafeAreaView>
-    );
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleLanguageSelect('pt')}
+              >
+                <Text style={styles.buttonText}>Português</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
+
+    </SafeAreaView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
+  container: {
+    flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  borderedContainer: {
+    flex: 1,
+    margin: width * 0.05,
+    borderWidth: 1,
+    borderColor: '#f8f9fa',
+    borderRadius: width * 0.025,
+    overflow: 'hidden',
+  },
 
-    },
-    backgroundImage: {
-        flex: 1,
-    },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.9)',
-
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    borderedContainer: {
-        flex: 1,
-        margin: 20,
-        borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 10,
-        overflow: 'hidden',
-    },
-    logoContainer: {
-        marginBottom: 60,
-    },
-    buttonContainer: {
-        width: '85%',
-        maxWidth: 400,
-        gap: 16,
-    },
-    button: {
-        width: '100%',
-        paddingVertical: 16,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: 'rgba(255, 255, 255, 0.3)',
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: '400',
-    },
-    image: {
-        width: 320,
-        height: 220,
-    }
+  buttonContainer: {
+    width: '70%',
+    maxWidth: 400,
+    gap: height * 0.02,
+  },
+  button: {
+    width: '100%',
+    paddingVertical: height * 0.02, // Responsive padding
+    borderRadius: width * 0.028,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: width * 0.05, // Responsive font size
+    textAlign: 'center',
+    fontWeight: '400',
+  },
+  image: {
+    width: width * 0.8, // Responsive width based on screen width
+    height: height * 0.3, // Responsive height based on screen height
+    // resizeMode: 'contain', // Ensures the image maintains aspect ratio
+  },
 });

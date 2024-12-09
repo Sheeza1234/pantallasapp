@@ -8,9 +8,12 @@ import {
   ImageBackground,
   Dimensions,
   Image,
+  StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
 import * as ImagePicker from 'expo-image-picker';
+import { ChevronDown, ChevronUp } from 'react-native-feather';
+import { useEffect } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,14 +21,19 @@ export default function IdentificationInfoScreen() {
   const [isMainDropdownOpen, setIsMainDropdownOpen] = useState(false);
   const [isMainDropdownOpen1, setIsMainDropdownOpen1] = useState(false);
 
-  const toggleMainDropdown = () => {;
+  const toggleMainDropdown = () => {
+    ;
     setIsMainDropdownOpen(!isMainDropdownOpen);
   };
-  const toggleMainDropdown1=()=>
-  {
-      setIsMainDropdownOpen1(!isMainDropdownOpen1)
+  const toggleMainDropdown1 = () => {
+    setIsMainDropdownOpen1(!isMainDropdownOpen1)
   }
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
 
   const pickImage = async () => {
     // Request permissions to access media library
@@ -50,7 +58,7 @@ export default function IdentificationInfoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require('../../../../assets/images/background.jpg')}
+        source={require('../../../../assets/images/background1.jpg')}
         style={styles.background}
         imageStyle={styles.backgroundImage}
         resizeMode="cover"
@@ -65,53 +73,81 @@ export default function IdentificationInfoScreen() {
             <Text style={styles.subDropdownText}>
               Licencia Nacional de Conducir
             </Text>
-            <Text style={styles.arrows}>▲</Text>
+            <ChevronDown
+              width={width * 0.09}
+              height={width * 0.09}
+              color="#0066FF"
+            />
           </TouchableOpacity>
           <TouchableOpacity style={[
-    styles.subDropdown,
-    isMainDropdownOpen
-      ? { width: '95%' } // Open width
-      : { width: '80%',marginLeft:55 }, // Closed width
-  ]} onPress={toggleMainDropdown}>
+            styles.subDropdown,
+            isMainDropdownOpen
+              ? { width: '95%' } // Open width
+              : { width: '80%', marginLeft: 55 }, // Closed width
+          ]} onPress={toggleMainDropdown}>
             <Text style={styles.subDropdownText}>
               Alfa Romeo              AA275HT
             </Text>
-            <Text style={styles.arrows}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
+            <Text style={styles.arrows}>{isMainDropdownOpen ? (
+              <ChevronUp
+                width={width * 0.09}
+                height={width * 0.09}
+                color="#0066FF"
+              />
+            ) : (
+              <ChevronDown
+                width={width * 0.09}
+                height={width * 0.09}
+                color="#0066FF"
+              />
+            )}</Text>
           </TouchableOpacity>
           {isMainDropdownOpen && (
-             <View>
-                 <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
-              <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
-              <Image
-                source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
-                style={styles.arrow}
-              />
-            </TouchableOpacity>
-                </View>
-            )}
+            <View>
+              <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
+                <Image
+                  source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
+                  style={styles.arrow}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
 
-<TouchableOpacity style={[
-    styles.subDropdown,
-    isMainDropdownOpen1
-      ? { width: '95%' } // Open width
-      : { width: '80%',marginLeft:55, } // Closed width
-  ]} onPress={toggleMainDropdown1}>
+          <TouchableOpacity style={[
+            styles.subDropdown,
+            isMainDropdownOpen1
+              ? { width: '95%' } // Open width
+              : { width: '80%', marginLeft: 55, } // Closed width
+          ]} onPress={toggleMainDropdown1}>
             <Text style={styles.subDropdownText}>
               Toyota                        AB369ES
             </Text>
-            <Text style={styles.arrows}>{isMainDropdownOpen1 ? '▲' : '▼'}</Text>
+            <Text style={styles.arrows}>{isMainDropdownOpen1 ? (
+              <ChevronUp
+                width={width * 0.09}
+                height={width * 0.09}
+                color="#0066FF"
+              />
+            ) : (
+              <ChevronDown
+                width={width * 0.09}
+                height={width * 0.09}
+                color="#0066FF"
+              />
+            )}</Text>
           </TouchableOpacity>
           {isMainDropdownOpen1 && (
-             <View>
-                 <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
-              <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
-              <Image
-                source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
-                style={styles.arrow}
-              />
-            </TouchableOpacity>
-                </View>
-            )}
+            <View>
+              <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
+                <Image
+                  source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
+                  style={styles.arrow}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </ImageBackground>
       <Navbar />
@@ -122,13 +158,13 @@ export default function IdentificationInfoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   background: {
     flex: 1,
   },
   backgroundImage: {
-    opacity: 0.1,
+    opacity: 0.3,
+
   },
   borderedContainer: {
     flex: 1,

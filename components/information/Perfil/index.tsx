@@ -9,8 +9,10 @@ import {
   Platform,
   ImageBackground,
   FlatList,
+  StatusBar
 } from 'react-native';
 import { useNavigation } from 'expo-router';
+import { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import { PlayCircle, User } from 'react-native-feather';
 import { scale, verticalScale, moderateScale } from 'react-native-size-matters';
@@ -31,8 +33,14 @@ const Perfil: React.FC = () => {
     { id: '2', label: 'Nombre: Usuario de Gooogle' },
     { id: '3', label: 'Email:google@gmail.com' },
     { id: '4', label: 'Idioma:Espanol' },
-  
+
   ];
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
+
 
   const handleOptionPress = (label: string) => {
   };
@@ -44,8 +52,8 @@ const Perfil: React.FC = () => {
     >
       {item.isTutorial ? (
         <>
-           <User stroke="black"  width={50} height={40}
-                     style={styles.tutorialIcon}
+          <User stroke="black" width={50} height={40}
+            style={styles.tutorialIcon}
           />
           <Text style={styles.tutorialText}>{item.label}</Text>
         </>
@@ -58,7 +66,7 @@ const Perfil: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../../assets/images/background.jpg')}
+        source={require('../../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -91,7 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   header: {
     backgroundColor: '#0066FF',

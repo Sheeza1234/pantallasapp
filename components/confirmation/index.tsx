@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,9 +8,8 @@ import {
   ScrollView,
   ImageBackground,
   Image,
-  Dimensions
+  Dimensions, StatusBar
 } from 'react-native';
-import Svg, { Circle, Text as SvgText } from 'react-native-svg';
 
 
 interface AccountDetails {
@@ -38,7 +37,11 @@ export default function AccountConfirmation() {
     email: "aflores@tupiglobal.com",
     phone: "+51 921 393 148",
   };
-
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
   const handleStart = () => {
     console.log('Starting the app...');
     navigation.navigate('Verification')
@@ -58,8 +61,6 @@ export default function AccountConfirmation() {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        {/* Translucent overlay */}
-        <View style={styles.overlay} />
         <View style={styles.borderedContainer}>
           <ScrollView
             contentContainerStyle={styles.scrollContent}
@@ -113,10 +114,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(9,109,249,0.9)',
-  },
+
   scrollContent: {
     flexGrow: 1,
     paddingHorizontal: width * 0.05,  // Adjust horizontal padding based on screen width
@@ -125,7 +123,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: 'white',
-    fontSize: width * 0.1,   // Font size adjusted relative to screen width
+    fontSize: width * 0.07,   // Font size adjusted relative to screen width
     fontWeight: 'bold',
     marginTop: height * 0.05,  // Margin top based on screen height
   },
@@ -178,6 +176,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width * 0.5,  // Image width adjusted to be responsive
-    height: height * 0.2,  // Image height adjusted to be responsive
+    height: height * 0.19,  // Image height adjusted to be responsive
   }
 });

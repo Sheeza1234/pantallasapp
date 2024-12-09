@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,13 +11,14 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
-import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../navbar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
+import { ChevronDown, ChevronUp, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import { useNavigation } from 'expo-router';
+import { CheckSquare } from 'react-native-feather';
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pinentry'>;
 interface Document {
@@ -30,19 +31,36 @@ const documents = [
     { id: 'AlfaRomeo', name: '                 AA275HT' },
     { id: 'Toyota ', name: '                   AB369ES' }
 ];
+
 const documentss = [{ icon: require('../../../assets/images/Iconos/aciete.png'), name: 'Aciete Motor', id: 'Aciete' },
 { icon: require('../../../assets/images/Iconos/filtro.png'), name: 'Filtro de Combustible', id: 2 },
 { icon: require('../../../assets/images/Iconos/aire.png'), name: 'Filtro de Aire', id: 3 },
 { icon: require('../../../assets/images/Iconos/habitaculo.png'), name: 'Filtro de Habitaculo', id: 4 },
-{ icon: require('../../../assets/images/Iconos/neuma.png'), name: 'Neumaticos', id: 5 },
+{ icon: require('../../../assets/images/Iconos/neuma.png'), name: 'Neumaticos', id: 'neumaticos' },
 { icon: require('../../../assets/images/Iconos/frenos.png'), name: 'Frenos', id: 7 },
-{ icon: require('../../../assets/images/Iconos/otros.png'), name: 'Otros', id: 8 },
-{ icon: require('../../../assets/images/Iconos/historial.png'), name: 'Historial', id: 9 },
+{ icon: require('../../../assets/images/Iconos/otros.png'), name: 'Otros', id: 'otros' },
+{ icon: require('../../../assets/images/Iconos/historial.png'), name: 'Historial', id: 'historial' },
 { icon: require('../../../assets/images/Iconos/checklist.png'), name: 'Check List Pre-Viaje', id: 'checklist' }]
 
 const documentes = [{ id: 'Recorrido', name: 'Recorrido Menor a 500km' },
-{ id: 'de ', name: 'Recorrido de 500km a 200km' },
-{ id: 'de ', name: 'Recorrido Mayor a 200km' }]
+{ id: '500km', name: 'Recorrido de 500km a 200km' },
+{ id: '2000km', name: 'Recorrido Mayor a 2000km' }]
+
+const documentess = [{ name: 'Recambio', id: 'a' }, { name: 'Alineacion', id: 'b' }, { name: 'Balanceo', id: 'j' }]
+const documenteses = [{ name: 'Differeciales', id: 'i' },
+{ name: 'Extremos de Direccion', id: 'h' },
+{ name: 'Mangureas', id: 'g' },
+{ name: 'Suspension', id: 'f' },
+{ name: 'Correas', id: 'e' },
+{ name: 'Direccion', id: 'd' },
+{ name: 'Embrague', id: 'c' }]
+
+const documentaes = [{ name: '2019', id: '' },
+{ name: '2020', id: '' }
+    , { name: '2021', id: '' },
+{ name: '2022', id: '' },
+{ name: '2023', id: '' },
+{ name: '2024', id: '' }]
 
 const { width, height } = Dimensions.get('window')
 export default function ServiciosInfoScreen() {
@@ -52,6 +70,20 @@ export default function ServiciosInfoScreen() {
     const [isAlfaRomeoOpen, setIsAlfaRomeoOpen] = useState(false);
     const [isToyotaOpen, setIsToyotaOpen] = useState(false);
     const [isChecklistOpen, setIsChecklistOpen] = useState(false);
+    const [isNeumaticosOpen, setIsNeumaticosOpen] = useState(false);
+    const [isOtrosOpen, setIsOtrosOpen] = useState(false);
+    const [isHistorialOpen, setIsHistorialOpen] = useState(false);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+    const toggleNeumaticosDropdown = () => {
+        setIsNeumaticosOpen((prev) => !prev);
+    };
+    const toggleHistorialDropdown = () => {
+        setIsHistorialOpen((prev) => !prev);
+    };
+    const toggleOtrosDropdown = () => {
+        setIsOtrosOpen((prev) => !prev);
+    };
 
     const toggleChecklistDropdown = () => {
         setIsChecklistOpen((prev) => !prev);
@@ -70,170 +102,321 @@ export default function ServiciosInfoScreen() {
         setIsMainDropdownOpen((prev) => !prev);
         setOpenSubDropdown(null);
     };
+    const toggleSelection = (item: string) => {
+        setSelectedItems((prevSelected) =>
+            prevSelected.includes(item)
+                ? prevSelected.filter((i) => i !== item)
+                : [...prevSelected, item]
+        );
+    };
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../assets/images/servicios.jpg')}
+                source={require('../../../assets/images/background.jpg')}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             >
-                <View style={styles.overlay} />
-                <View style={styles.borderedContainer}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>INFORMACIÓN </Text>
-                        <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
-                    </View>
-                    <View style={styles.mainDropdownWrapper}>
-
-                        <View style={styles.iconContainer}>
-                            <Image
-                                source={require('../../../assets/images/Iconos/PNG/Servicios.png')}
-                                style={styles.iconImage}
-                            />
+                <ImageBackground
+                    source={isMainDropdownOpen
+                        ? require('../../../assets/images/servicos1.jpg') // Change to the new overlay image
+                        : require('../../../assets/images/servicios.jpg')} // Original overlay image
+                    style={styles.overlayImage}
+                >
+                    <View style={styles.borderedContainer}>
+                        <View style={styles.header}>
+                            <Text style={styles.headerText}>INFORMACIÓN </Text>
+                            <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
                         </View>
+                        <View style={styles.mainDropdownWrapper}>
 
-                        <TouchableOpacity style={styles.mainDropdown} onPress={toggleMainDropdown}>
-                            <Text style={styles.mainDropdownText}>SERVICIOS</Text>
-                            <Text style={styles.arrow}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
-                        </TouchableOpacity>
+                            <View style={styles.iconContainer}>
+                                <Image
+                                    source={require('../../../assets/images/Iconos/PNG/Servicios.png')}
+                                    style={styles.iconImage}
+                                />
+                            </View>
 
-                        {isMainDropdownOpen && (
-                            <ScrollView>
-                            <View>
-                                {documents.map((document) => (
-                                    <View key={document.id}>
-                                        <TouchableOpacity
-                                            style={styles.subDropdown}
-                                            onPress={() => {
-                                                if (document.id === 'AlfaRomeo') {
-                                                    toggleSubDropdownAlfaRomeo();
-                                                } else if (document.id === 'Toyota') {
-                                                    toggleSubDropdownToyota()
-                                                } else if (document.id === 'checklist') {
-                                                    toggleChecklistDropdown(); // Toggle checklist dropdown
-                                                }
-                                            }}
+                            <TouchableOpacity
+                                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                                onPress={toggleMainDropdown}
+                            >
 
-                                        >
-                                            <Text style={styles.subDropdownText}>
-                                                {document.id}  {document.name}
-                                            </Text>
-                                            <Text style={styles.arrow}>
-                                                {document.id === 'AlfaRomeo' && isAlfaRomeoOpen ? '▲' : '▼'}
-                                            </Text>
-                                            {document.id === 'AlfaRomeo' && isAlfaRomeoOpen ? '▲' : '▼'}
-                                            {document.id === 'Toyota' && isToyotaOpen ? '▲' : '▼'}
+                                <Text style={styles.mainDropdownText}>SERVICIOS</Text>
+                                <Text style={styles.arrow}> {isMainDropdownOpen ? (
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                ) : (
+                                    <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
+                                )}</Text>
+                            </TouchableOpacity>
 
-                                        </TouchableOpacity>
-                                        {document.id === 'Toyota' && isToyotaOpen && (
-                                            <View>
+                            {isMainDropdownOpen && (
+                                <ScrollView>
+                                    <View>
+                                        {documents.map((document) => (
+                                            <View key={document.id}>
+                                                <TouchableOpacity
+                                                    style={styles.subDropdown}
+                                                    onPress={() => {
+                                                        if (document.id === 'AlfaRomeo') {
+                                                            toggleSubDropdownAlfaRomeo();
+                                                        } else if (document.id === 'Toyota') {
+                                                            toggleSubDropdownToyota()
+                                                        } else if (document.id === 'checklist') {
+                                                            toggleChecklistDropdown(); // Toggle checklist dropdown
+                                                        } else if (document.id === 'neumaticos') {
+                                                            toggleNeumaticosDropdown();
+                                                        } else if (document.id === 'otros') {
+                                                            toggleOtrosDropdown()
+                                                        } else if (document.id === 'historial') {
+                                                            toggleHistorialDropdown()
+                                                        }
+                                                    }}
+
+                                                >
+                                                    <Text style={styles.subDropdownText}>
+                                                        {document.id}  {document.name}
+                                                    </Text>
+                                                    <Text style={styles.arrow}>
+                                                        {document.id === 'AlfaRomeo' && isAlfaRomeoOpen ? (
+                                                            <ChevronUp width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                        ) : (
+                                                            <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                        )}
+                                                    </Text>
+
+                                                </TouchableOpacity>
+                                                {document.id === 'Toyota' && isToyotaOpen && (
+                                                    <View>
+
+                                                    </View>
+                                                )}
+
+                                                {document.id === 'checklist' && isChecklistOpen && (
+                                                    <View>
+                                                        {documentes.map((subdocuments) => (
+                                                            <View key={subdocuments.id}>
+
+                                                                <TouchableOpacity
+                                                                    style={styles.subDropdown1}
+                                                                    onPress={() => {
+                                                                        if (subdocuments.id === 'Aciete') {
+                                                                            navigation.navigate('Aciete');
+                                                                        } else if (subdocuments.id === 'checklist') {
+                                                                            navigation.navigate('CheckList');
+                                                                        }
+                                                                    }}
+                                                                >
+
+                                                                    <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
+                                                                    <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                        ))}
+                                                    </View>
+                                                )}
+
+                                                {document.id === 'AlfaRomeo' && isAlfaRomeoOpen && (
+                                                    <View>
+                                                        {documentss.map((subdocument) => (
+                                                            <View key={subdocument.id}>
+
+                                                                <TouchableOpacity
+                                                                    style={styles.subDropdown1}
+                                                                    onPress={() => {
+                                                                        if (subdocument.id === 'Aciete') {
+                                                                            navigation.navigate('Aciete');
+                                                                        } else if (subdocument.id === 'checklist') {
+                                                                            toggleChecklistDropdown()
+                                                                        } else if (subdocument.id === 'neumaticos') {
+                                                                            toggleNeumaticosDropdown()
+                                                                        } else if (subdocument.id === 'otros') {
+                                                                            toggleOtrosDropdown()
+                                                                        } else if (document.id === 'historial') {
+                                                                            toggleHistorialDropdown()
+                                                                        }
+                                                                    }}
+                                                                >
+                                                                    <Image source={subdocument.icon} style={styles.itemIcon} />
+                                                                    <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
+                                                                    <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                                </TouchableOpacity>
+                                                                {subdocument.id === 'checklist' && isChecklistOpen && (
+                                                                    <View>
+                                                                        {documentes.map((subdocuments) => (
+                                                                            <View key={subdocuments.id}>
+
+                                                                                <TouchableOpacity
+                                                                                    style={styles.subDropdown1}
+                                                                                    onPress={() => {
+                                                                                        if (subdocuments.id === 'Recorrido') {
+                                                                                            navigation.navigate('Remdio200');
+                                                                                        } else if (subdocuments.id === 'checklist') {
+                                                                                            navigation.navigate('CheckList');
+                                                                                        } else if (subdocuments.id === '500km') {
+                                                                                            navigation.navigate('Remdio500')
+                                                                                        } else if (subdocuments.id === '2000km') {
+                                                                                            navigation.navigate('Remdio2000')
+                                                                                        }
+                                                                                    }}
+                                                                                >
+
+                                                                                    <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
+                                                                                    <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                        ))}
+                                                                    </View>
+                                                                )}
+                                                                {subdocument.id === 'neumaticos' && isNeumaticosOpen && (
+                                                                    <View>
+                                                                        {documentess.map((subdocumentss) => (
+                                                                            <View key={subdocumentss.id}>
+
+                                                                                <TouchableOpacity
+                                                                                    style={styles.subDropdown1}
+                                                                                    onPress={() => { if (subdocument) { toggleSelection(subdocument.name) } }}
+                                                                                >
+
+                                                                                    <Text style={styles.subDropdownText1}>{subdocumentss.name}</Text>
+                                                                                    <View style={styles.iconsContainer}>
+                                                                                        <ChevronDown
+                                                                                            width={width * 0.09}
+                                                                                            height={width * 0.09}
+                                                                                            color="#0066FF"
+                                                                                        />
+                                                                                        <CheckSquare
+                                                                                            color={
+                                                                                                selectedItems.includes(subdocumentss.name)
+                                                                                                    ? "#0066FF"
+                                                                                                    : "black"
+                                                                                            }
+                                                                                            width={width * 0.07}
+                                                                                            height={width * 0.07}
+                                                                                        />
+                                                                                    </View>
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                        ))}
+                                                                    </View>
+                                                                )}
+                                                                {subdocument.id === 'otros' && isOtrosOpen && (
+                                                                    <View>
+                                                                        {documenteses.map((subdocumentes) => (
+                                                                            <View key={subdocumentes.id}>
+
+                                                                                <TouchableOpacity
+                                                                                    style={styles.subDropdown1}
+                                                                                    onPress={() => { if (subdocumentes) { toggleSelection(subdocumentes.name) } }}
+                                                                                >
+
+                                                                                    <Text style={styles.subDropdownText1}>{subdocumentes.name}</Text>
+                                                                                    <View style={styles.iconsContainer}>
+                                                                                        <ChevronDown
+                                                                                            width={width * 0.09}
+                                                                                            height={width * 0.09}
+                                                                                            color="#0066FF"
+                                                                                        />
+                                                                                        <CheckSquare
+                                                                                            color={
+                                                                                                selectedItems.includes(subdocumentes.name)
+                                                                                                    ? "#0066FF"
+                                                                                                    : "black"
+                                                                                            }
+                                                                                            width={width * 0.07}
+                                                                                            height={width * 0.07}
+                                                                                        />
+                                                                                    </View>
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                        ))}
+                                                                    </View>
+                                                                )}
+                                                                {subdocument.id === 'historial' && isHistorialOpen && (
+                                                                    <View>
+                                                                        <TouchableOpacity
+                                                                            style={styles.subDropdown2}
+                                                                        >
+                                                                            <Image
+                                                                                source={require('../../../assets/images/Iconos/calender.png')}
+                                                                                style={styles.iconImage} />
+                                                                            <Text style={styles.subDropdownText1}>Fecha</Text>
+                                                                            <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+
+                                                                        </TouchableOpacity>
+
+                                                                        {documentaes.map((subdocumentaes) => (
+                                                                            <View key={subdocumentaes.id}>
+
+                                                                                <TouchableOpacity
+                                                                                    style={styles.subDropdown1}
+                                                                                    onPress={() => { if (subdocumentaes) { toggleSelection(subdocumentaes.name) } }}
+                                                                                >
+
+                                                                                    <Text style={styles.subDropdownText1}>{subdocumentaes.name}</Text>
+                                                                                    <View style={styles.iconsContainer}>
+                                                                                        <ChevronDown
+                                                                                            width={width * 0.09}
+                                                                                            height={width * 0.09}
+                                                                                            color="#0066FF"
+                                                                                        />
+                                                                                        <CheckSquare
+                                                                                            color={
+                                                                                                selectedItems.includes(subdocumentaes.name)
+                                                                                                    ? "#0066FF"
+                                                                                                    : "black"
+                                                                                            }
+                                                                                            width={width * 0.07}
+                                                                                            height={width * 0.07}
+                                                                                        />
+                                                                                    </View>
+                                                                                </TouchableOpacity>
+                                                                            </View>
+                                                                        ))}
+                                                                    </View>
+                                                                )}
+
+                                                            </View>
+                                                        ))}
+                                                    </View>
+                                                )}
+
 
                                             </View>
-                                        )}
-                                
-                                            {document.id === 'checklist' && isChecklistOpen && (
-                                                <View>
-                                                    {documentes.map((subdocuments) => (
-                                                        <View key={subdocuments.id}>
 
-                                                            <TouchableOpacity
-                                                                style={styles.subDropdown1}
-                                                                onPress={() => {
-                                                                    if (subdocuments.id === 'Aciete') {
-                                                                        navigation.navigate('Aciete');
-                                                                    } else if (subdocuments.id === 'checklist') {
-                                                                        navigation.navigate('CheckList');
-                                                                    }
-                                                                }}
-                                                            >
+                                        ))}
 
-                                                                <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
-                                                                <Text style={styles.arrow}>▼</Text>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    ))}
-                                                </View>
-                                            )}
+                                        <View style={styles.singleBox}>
+                                            <TouchableOpacity style={styles.button}>
+                                                <Image
+                                                    source={require('../../../assets/images/editar.jpg')} // Replace with your image path
+                                                    style={styles.icon}
+                                                />
+                                                <Text style={styles.buttonText}>Editar</Text>
+                                            </TouchableOpacity>
 
-                                            {document.id === 'AlfaRomeo' && isAlfaRomeoOpen && (
-                                                <View>
-                                                    {documentss.map((subdocument) => (
-                                                        <View key={subdocument.id}>
-
-                                                            <TouchableOpacity
-                                                                style={styles.subDropdown1}
-                                                                onPress={() => {
-                                                                    if (subdocument.id === 'Aciete') {
-                                                                        navigation.navigate('Aciete');
-                                                                    } else if (subdocument.id === 'checklist') {
-                                                                           toggleChecklistDropdown()
-                                                                    }
-                                                                }}
-                                                            >
-                                                                <Image source={subdocument.icon} style={styles.itemIcon} />
-                                                                <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
-                                                                <Text style={styles.arrow}>▼</Text>
-                                                            </TouchableOpacity>
-                                                            {subdocument.id === 'checklist' && isChecklistOpen && (
-                                                <View>
-                                                    {documentes.map((subdocuments) => (
-                                                        <View key={subdocuments.id}>
-
-                                                            <TouchableOpacity
-                                                                style={styles.subDropdown1}
-                                                                onPress={() => {
-                                                                    if (subdocuments.id === 'Recorrido') {
-                                                                        navigation.navigate('Remdio200');
-                                                                    } else if (subdocuments.id === 'checklist') {
-                                                                        navigation.navigate('CheckList');
-                                                                    }
-                                                                }}
-                                                            >
-
-                                                                <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
-                                                                <Text style={styles.arrow}>▼</Text>
-                                                            </TouchableOpacity>
-                                                        </View>
-                                                    ))}
-                                                </View>
-                                            )}
-
-                                                        </View>
-                                                    ))}
-                                                </View>
-                                            )}
-
-
+                                            <TouchableOpacity style={styles.button}>
+                                                <Image
+                                                    source={require('../../../assets/images/notes.png')} // Replace with your image path
+                                                    style={styles.icon}
+                                                />
+                                                <Text style={styles.buttonText}>Notas</Text>
+                                            </TouchableOpacity>
+                                        </View>
                                     </View>
-                                    
-                                ))}
-                                
-                                <View style={styles.singleBox}>
-                                    <TouchableOpacity style={styles.button}>
-                                        <Image
-                                            source={require('../../../assets/images/editar.jpg')} // Replace with your image path
-                                            style={styles.icon}
-                                        />
-                                        <Text style={styles.buttonText}>Editar</Text>
-                                    </TouchableOpacity>
+                                </ScrollView>
+                            )}
 
-                                    <TouchableOpacity style={styles.button}>
-                                        <Image
-                                            source={require('../../../assets/images/notes.png')} // Replace with your image path
-                                            style={styles.icon}
-                                        />
-                                        <Text style={styles.buttonText}>Notas</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            </ScrollView>
-                        )}
+                        </View>
+
 
                     </View>
-
-
-                </View>
+                </ImageBackground>
             </ImageBackground>
             <Navbar />
         </SafeAreaView>
@@ -248,12 +431,15 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: height * 0.3,
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.1)',
+    overlayImage: {
+        flex: 1,
+        width: '100%',
+        height: height * 0.28,
+        resizeMode: 'contain',
+
     },
+
     keyboardView: {
         flex: 1,
     },
@@ -261,6 +447,9 @@ const styles = StyleSheet.create({
         color: '#0066FF',
         fontSize: Math.min(width, height) * 0.03,
         fontWeight: '800',
+    },
+    mainDropdownOpen: {
+        backgroundColor: 'silver',
     },
     scrollContent: {
         flexGrow: 1,
@@ -314,11 +503,18 @@ const styles = StyleSheet.create({
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+    },
+    iconsContainer: {
+        flexDirection: 'row', // Arrange icons horizontally
+        alignItems: 'center', // Vertically align icons
     },
     icons: {
         flexDirection: 'row',
@@ -353,11 +549,24 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '95%',
     },
+    subDropdown2: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: height * 0.004,
+        margin: width * 0.02,
+        marginLeft: width * 0.2,
+        backgroundColor: 'white',
+        borderWidth: 1,
+        borderColor: '#0066FF',
+        borderRadius: 15,
+        width: '85%',
+    },
     subDropdownText: {
         fontSize: width * 0.045,
         fontWeight: '800',
         color: '#333',
-        // marginLeft: width * 0.03,
+        marginLeft: width * 0.03,
     },
     subDropdown1: {
         flexDirection: 'row',
@@ -395,7 +604,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        marginTop: width * 0.73,
+        marginTop: width * 0.78,
         elevation: 3,
         width: width * 0.9,
     },

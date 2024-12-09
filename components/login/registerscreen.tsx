@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from 'expo-router';
 import {
     SafeAreaView,
@@ -11,7 +11,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     ImageBackground,
-    Image, Dimensions
+    Image, Dimensions, StatusBar
 } from 'react-native';
 import Svg, { Circle, Text as SvgText } from 'react-native-svg';
 
@@ -31,6 +31,11 @@ type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Confirm'>;
 const { width, height } = Dimensions.get('window');
 export default function RegisterScreen() {
     const navigation = useNavigation<NavigationProps>();
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     const [formData, setFormData] = useState<FormData>({
         username: '',
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#0066FF',
-        fontSize: width * 0.08, // Font size responsive to screen width
+        fontSize: width * 0.07, // Font size responsive to screen width
         fontWeight: 'bold',
         marginLeft: 10,
     },

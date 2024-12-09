@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,7 +11,8 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    Platform,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -33,7 +34,11 @@ export default function EstancioInfoScreen() {
     const navigation = useNavigation<NavigationProps>();
     const [isAlfaOpen, setIsAlfaOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
-
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
     const toggleSubDropdownAlfa = () => {
         setIsAlfaOpen((prev) => !prev);
         if (isServiciosOpen) setIsServiciosOpen(false);

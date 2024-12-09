@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
 import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../../navbar';
@@ -48,6 +48,11 @@ export default function RomeoInfoScreen() {
         setIsMainDropdownOpen((prev) => !prev);
         setOpenSubDropdown(null);
     };
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
 
     return (

@@ -39,4 +39,13 @@ export type RootStackParamList = {
     Estancio: undefined;
     CheckList: undefined;
     Remdio200:undefined;
+    luces:undefined;
+    fluidos:undefined;
+    neumaticos:undefined;
+    otros:undefined;
+    del:undefined;
+    equipo:undefined;
+    Remdio500:undefined;
+    Remdio2000:undefined;
+    Revisar:undefined;
 };

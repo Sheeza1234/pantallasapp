@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,9 +8,10 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
-import * as ImagePicker from 'expo-image-picker';
+import { ChevronDown } from 'react-native-feather';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
 import { useNavigation } from 'expo-router';
@@ -21,11 +22,15 @@ const { width, height } = Dimensions.get('window');
 
 export default function ServicosNoInfoScreen() {
     const navigation = useNavigation<NavigationProps>();
-    
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../../assets/images/background.jpg')}
+                source={require('../../../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
                 resizeMode="cover"
@@ -37,61 +42,77 @@ export default function ServicosNoInfoScreen() {
                     </View>
 
                     <TouchableOpacity style={styles.subDropdown} >
-                    <View style={styles.iconContainer}>
+                        <View style={styles.iconContainer}>
                             <Image
                                 source={require('../../../../assets/images/Iconos/PNG/Gastos.png')}
                                 style={styles.iconImage}
                             />
                         </View>
 
-                        {/* MIS VEHÍCULOS Container */}
+
                         <TouchableOpacity >
                             <Text style={styles.mainDropdownText}>GASTOS</Text>
-                        
+
                         </TouchableOpacity>
-                        <Text style={styles.arrows}>▼</Text>
+                        <ChevronDown
+                            width={width * 0.09}
+                            height={width * 0.09}
+                            color="#0066FF"
+                        />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.subDropdown} >
                         <Text style={styles.subDropdownText}>
-                           Servicios No Programados
+                            Servicios No Programados
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown
+                            width={width * 0.09}
+                            height={width * 0.09}
+                            color="#0066FF"
+                        />
                     </TouchableOpacity>
                     <View>
-                            <TouchableOpacity style={styles.subDropdown1} onPress={()=>{navigation.navigate('GastrosDetail')}}>
+                        <TouchableOpacity style={styles.subDropdown1} onPress={() => { navigation.navigate('GastrosDetail') }}>
                             <Text style={styles.subDropdownText}>
-                            Alfa Romeo                    AA275HT
-                        </Text>
-                        <Text style={styles.arrows}>▼</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown1} >
-                            <Text style={styles.subDropdownText}>
-                            Toyota                            AB369ES
+                                Alfa Romeo                  AA275HT
                             </Text>
-                            <Text style={styles.arrows}>▼</Text>
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown1} >
+                            <Text style={styles.subDropdownText}>
+                                Toyota                          AB369ES
+                            </Text>
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
 
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.singleBox}>
-                                    <TouchableOpacity style={styles.button}>
-                                        <Image
-                                            source={require('../../../../assets/images/editar.jpg')} // Replace with your image path
-                                            style={styles.icon}
-                                        />
-                                        <Text style={styles.buttonText}>Editar</Text>
-                                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.singleBox}>
+                        <TouchableOpacity style={styles.button}>
+                            <Image
+                                source={require('../../../../assets/images/editar.jpg')} // Replace with your image path
+                                style={styles.icon}
+                            />
+                            <Text style={styles.buttonText}>Editar</Text>
+                        </TouchableOpacity>
 
-                                    {/* Notas Button */}
-                                    <TouchableOpacity style={styles.button}>
-                                        <Image
-                                            source={require('../../../../assets/images/notes.png')} // Replace with your image path
-                                            style={styles.icon}
-                                        />
-                                        <Text style={styles.buttonText}>Notas</Text>
-                                    </TouchableOpacity>
-                                </View>
+                        {/* Notas Button */}
+                        <TouchableOpacity style={styles.button}>
+                            <Image
+                                source={require('../../../../assets/images/notes.png')} // Replace with your image path
+                                style={styles.icon}
+                            />
+                            <Text style={styles.buttonText}>Notas</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                
+
                 </View>
             </ImageBackground>
             <Navbar />
@@ -102,21 +123,23 @@ export default function ServicosNoInfoScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
     },
     background: {
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.1,
+        // opacity: 0.1,
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: 'blue',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
 
 
@@ -141,7 +164,7 @@ const styles = StyleSheet.create({
         width: width * 0.18,
         height: width * 0.18,
         borderRadius: width * 0.1,
-       
+
         alignItems: 'center',
         marginLeft: width * 0.015,
         zIndex: 1,
@@ -177,12 +200,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: height * 0.008,
         margin: width * 0.02,
-        marginLeft:width*0.15,
+        marginLeft: width * 0.15,
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#0066FF',
         borderRadius: 15,
-        width: width*0.7,
+        width: width * 0.7,
     },
     subDropdownText1: {
         fontSize: width * 0.036,
@@ -243,7 +266,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         marginTop: width * 0.68,
         elevation: 3,
-        width:'auto',
+        width: 'auto',
     },
     button: {
         alignItems: 'center',

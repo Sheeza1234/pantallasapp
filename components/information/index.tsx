@@ -7,10 +7,12 @@ import {
   Image,
   Dimensions,
   Platform,
-  ImageBackground
+  ImageBackground,
+  StatusBar
 } from 'react-native';
-import { Home, ArrowLeft, Menu } from 'react-native-feather';
+import { useEffect } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { ChevronDown, ChevronUp, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import { RootStackParamList } from '@/types';
 import { useNavigation } from 'expo-router';
 import Navbar from '../navbar';
@@ -29,10 +31,14 @@ const InformationScreen: React.FC = () => {
     { label: 'Notificaciones', icon: require('../../assets/images/Iconos/PNG/Notificaciones.png'), route: 'Notificaciones' },
     { label: 'Servicios', icon: require('../../assets/images/Iconos/PNG/Servicios.png'), route: 'Servicios' },
     { label: 'Gastos', icon: require('../../assets/images/Iconos/PNG/Gastos.png'), route: 'Gastos' },
-    { label: 'Geolocalización', icon: require('../../assets/images/Iconos/PNG/Geolocalizacion.png'),route:'Location' },
+    { label: 'Geolocalización', icon: require('../../assets/images/Iconos/PNG/Geolocalizacion.png'), route: 'Location' },
   ];
   const navigation = useNavigation<NavigationProps>();
-
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
   const handlePress = (route: keyof RootStackParamList) => {
     navigation.navigate(route as never)
   };
@@ -54,7 +60,7 @@ const InformationScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/background.jpg')}
+        source={require('../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -78,6 +84,7 @@ const InformationScreen: React.FC = () => {
               </TouchableOpacity>
             ))}
           </View>
+
         </View>
         <Navbar />
       </ImageBackground>
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.4,
   },
   header: {
     backgroundColor: '#0066FF',
@@ -126,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: height * 0.01, // Responsive vertical margin
+    marginVertical: height * 0.013, // Responsive vertical margin
     borderWidth: 2,
     borderColor: 'silver',
     shadowColor: '#000',

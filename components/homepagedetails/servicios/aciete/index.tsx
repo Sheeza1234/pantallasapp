@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,36 +8,42 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
 import * as ImagePicker from 'expo-image-picker';
+import { ChevronDown } from 'react-native-feather';
 
 const { width, height } = Dimensions.get('window');
 
 export default function AcieteInfoScreen() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
     const pickImage = async () => {
         // Request permissions to access media library
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
+
         if (permissionResult.granted === false) {
-          alert('Permission to access gallery is required!');
-          return;
+            alert('Permission to access gallery is required!');
+            return;
         }
-    
+
         // Open image picker
         const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            quality: 1,
         });
-    
+
         if (!result.canceled && result.assets?.[0]?.uri) {
-          setSelectedImage(result.assets[0].uri); // Set selected image URI
+            setSelectedImage(result.assets[0].uri); // Set selected image URI
         }
-      };
-    
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
@@ -54,35 +60,35 @@ export default function AcieteInfoScreen() {
 
                     <TouchableOpacity style={styles.subDropdown} >
                         <Text style={styles.subDropdownText}>
-                        Alfa Romeo              AA265HT
+                            Alfa Romeo              AA265HT
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.subDropdown} >
                         <Text style={styles.subDropdownText}>
-                           Infraccion  01
+                            Infraccion  01
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                     </TouchableOpacity>
                     <View>
-                            <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                        <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
                             <Text style={styles.subDropdownText1}>
-                            Fecha:                              14/04/2020
-                        </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                                Fecha:                              14/04/2020
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
                             <Text style={styles.subDropdownText1}>
-                            Tipo:               Adelantamiento Indebido
-                        </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                                Tipo:               Adelantamiento Indebido
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
                             <Text style={styles.subDropdownText1}>
-                            Monto                                   58000$
-                        </Text>
-                            </TouchableOpacity>
-                        </View>
+                                Monto                                   58000$
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
 
-                
+
                 </View>
             </ImageBackground>
             <Navbar />
@@ -150,12 +156,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: height * 0.008,
         margin: width * 0.02,
-        marginLeft:width*0.15,
+        marginLeft: width * 0.15,
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#0066FF',
         borderRadius: 15,
-        width: width*0.7,
+        width: width * 0.7,
     },
     subDropdownText1: {
         fontSize: width * 0.036,

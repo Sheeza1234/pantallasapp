@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
 import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../../navbar';
@@ -35,6 +35,11 @@ export default function GastrosDetailInfoScreen() {
     const [isAlfaOpen, setIsAlfaOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
 
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -60,49 +65,57 @@ export default function GastrosDetailInfoScreen() {
 
                         <TouchableOpacity style={styles.mainDropdown}>
                             <Text style={styles.mainDropdownText}>GASTOS/Detalle</Text>
-                            <Text style={styles.arrow}>▼</Text>
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.subDropdown} >
                             <Text style={styles.subDropdownText}>
-                            Alfa Romeo                 AB369ES
+                                Alfa Romeo                 AB369ES
                             </Text>
-                            <Text style={styles.arrow}>▼</Text>
+                            <ChevronDown
+                                width={width * 0.09}
+                                height={width * 0.09}
+                                color="#0066FF"
+                            />
 
-                            </TouchableOpacity>
-                            <View>
+                        </TouchableOpacity>
+                        <View>
                             <Text style={styles.subItem}>Combustible:                   <Text style={styles.item}>95350$ </Text></Text>
-                        <Text style={styles.subItem}>Seguro:                             <Text style={styles.item}>17250$</Text></Text>
-                        <Text style={styles.subItem}>Patente:                             <Text style={styles.item}>11475$</Text></Text>
-                        <Text style={styles.subItem}>Servicios:                           <Text style={styles.item}>55735$ </Text></Text>
-                        <Text style={styles.subItem}>Infracciones:                             <Text style={styles.item}>0$ </Text></Text>
-                        <Text style={styles.subItem}>Otros:                                          <Text style={styles.item}>0$ </Text></Text>
-                        <Text style={styles.subItem}>Total Mayo 2024:           <Text style={styles.item}>179810$ </Text></Text>
-                    
-                    
-                            </View>
-                            <View style={styles.singleBox}>
-                          {/* Editar Button */}
-                          <TouchableOpacity style={styles.button}>
-                            <Image
-                              source={require('../../../../assets/images/editar.jpg')} // Replace with your image path
-                              style={styles.icon}
-                            />
-                            <Text style={styles.buttonText}>Editar</Text>
-                          </TouchableOpacity>
+                            <Text style={styles.subItem}>Seguro:                             <Text style={styles.item}>17250$</Text></Text>
+                            <Text style={styles.subItem}>Patente:                             <Text style={styles.item}>11475$</Text></Text>
+                            <Text style={styles.subItem}>Servicios:                           <Text style={styles.item}>55735$ </Text></Text>
+                            <Text style={styles.subItem}>Infracciones:                             <Text style={styles.item}>0$ </Text></Text>
+                            <Text style={styles.subItem}>Otros:                                          <Text style={styles.item}>0$ </Text></Text>
+                            <Text style={styles.subItem}>Total Mayo 2024:           <Text style={styles.item}>179810$ </Text></Text>
 
-                          {/* Notas Button */}
-                          <TouchableOpacity style={styles.button}>
-                            <Image
-                              source={require('../../../../assets/images/notes.png')} // Replace with your image path
-                              style={styles.icon}
-                            />
-                            <Text style={styles.buttonText}>Notas</Text>
-                          </TouchableOpacity>
+
                         </View>
-                       
+                        <View style={styles.singleBox}>
+                            {/* Editar Button */}
+                            <TouchableOpacity style={styles.button}>
+                                <Image
+                                    source={require('../../../../assets/images/editar.jpg')} // Replace with your image path
+                                    style={styles.icon}
+                                />
+                                <Text style={styles.buttonText}>Editar</Text>
+                            </TouchableOpacity>
+
+                            {/* Notas Button */}
+                            <TouchableOpacity style={styles.button}>
+                                <Image
+                                    source={require('../../../../assets/images/notes.png')} // Replace with your image path
+                                    style={styles.icon}
+                                />
+                                <Text style={styles.buttonText}>Notas</Text>
+                            </TouchableOpacity>
+                        </View>
+
+                    </View>
                 </View>
-                </View>
-               
+
             </ImageBackground>
             <Navbar />
         </SafeAreaView>
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
         color: '#0066FF',
         fontSize: Math.min(width, height) * 0.05, // Proportional font size
         fontWeight: '800',
-        
+
     },
     scrollContent: {
         flexGrow: 1,
@@ -145,8 +158,8 @@ const styles = StyleSheet.create({
         color: '#555',
         paddingVertical: height * 0.007,
         marginLeft: width * 0.05,
-        
-      },
+
+    },
     mainDropdownWrapper: {
         paddingTop: height * 0.046,
         flexDirection: 'column',

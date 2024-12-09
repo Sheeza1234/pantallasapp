@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,10 @@ import {
   ImageBackground,
   Dimensions,
   Image,
+  StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
+import { ChevronDown } from 'react-native-feather';
 import * as ImagePicker from 'expo-image-picker';
 
 const { width, height } = Dimensions.get('window');
@@ -25,6 +27,11 @@ export default function LicenciaInfoScreen() {
       alert('Permission to access gallery is required!');
       return;
     }
+    useEffect(() => {
+      StatusBar.setHidden(true);
+      StatusBar.setBackgroundColor('transparent');
+      StatusBar.setBarStyle('light-content');
+    }, []);
 
     // Open image picker
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -41,7 +48,7 @@ export default function LicenciaInfoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require('../../../../assets/images/background.jpg')}
+        source={require('../../../../assets/images/background1.jpg')}
         style={styles.background}
         imageStyle={styles.backgroundImage}
         resizeMode="cover"
@@ -56,7 +63,11 @@ export default function LicenciaInfoScreen() {
             <Text style={styles.subDropdownText}>
               Licencia Nacional de Conducir
             </Text>
-            <Text style={styles.arrows}>▲</Text>
+            <ChevronDown
+              width={width * 0.09}
+              height={width * 0.09}
+              color="#0066FF"
+            />
           </TouchableOpacity>
 
           {/* Conditionally render based on whether an image is selected */}
@@ -96,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImage: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   borderedContainer: {
     flex: 1,

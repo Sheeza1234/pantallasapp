@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,9 +11,9 @@ import {
   ImageBackground,
   Dimensions,
   Image,
-  Platform
+  StatusBar
 } from 'react-native';
-import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
+import { ChevronDown, ChevronUp, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../navbar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
@@ -39,7 +39,11 @@ export default function SeugroInfoScreen() {
   const navigation = useNavigation<NavigationProps>();
   const [isAlfaOpen, setIsAlfaOpen] = useState(false);
   const [isToyotaOpen, setIsToyotaOpen] = useState(false);
-  
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
   const toggleSubDropdownAlfa = () => {
     setIsAlfaOpen((prev) => !prev);
     if (isToyotaOpen) setIsToyotaOpen(false); // Close Toyota if open
@@ -48,12 +52,12 @@ export default function SeugroInfoScreen() {
     setIsToyotaOpen((prev) => !prev);
     if (isAlfaOpen) setIsAlfaOpen(false); // Close Alfa if open
   };
-  
+
   const toggleMainDropdown = () => {
     setIsMainDropdownOpen((prev) => !prev);
     setOpenSubDropdown(null);
   };
-  
+
   const navigatetopolizascreen = () => {
     navigation.navigate('Poliza');
   }
@@ -61,117 +65,172 @@ export default function SeugroInfoScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require('../../../assets/images/seugro.jpg')}
+        source={require('../../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <View style={styles.overlay} />
-        <View style={styles.borderedContainer}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>INFORMACIÓN </Text>
-            <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
-          </View>
-          <View style={styles.mainDropdownWrapper}>
-            {/* Circle (Icon) */}
-            <View style={styles.iconContainer}>
-              <Image
-                source={require('../../../assets/images/Iconos/PNG/Seguro.png')}
-                style={styles.iconImage}
-              />
+        <ImageBackground
+          source={isMainDropdownOpen
+            ? require('../../../assets/images/seugro1.jpg') // Change to the new overlay image
+            : require('../../../assets/images/seugro.jpg')} // Original overlay image
+          style={styles.overlayImage}
+        >
+
+          <View style={styles.borderedContainer}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>INFORMACIÓN </Text>
+              <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
+            </View>
+            <View style={styles.mainDropdownWrapper}>
+              {/* Circle (Icon) */}
+              <View style={styles.iconContainer}>
+                <Image
+                  source={require('../../../assets/images/Iconos/PNG/Seguro.png')}
+                  style={styles.iconImage}
+                />
+              </View>
+
+              <TouchableOpacity
+                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                onPress={toggleMainDropdown}
+              >
+
+                <Text style={styles.mainDropdownText}>SEUGRO</Text>
+                <Text style={styles.arrow}> {isMainDropdownOpen ? (
+                  <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                ) : (
+                  <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
+                )}</Text>
+              </TouchableOpacity>
+
+              {/* Dropdown Content */}
+              {isMainDropdownOpen && (
+                <View>
+                  {documents.map((document) => (
+                    <View key={document.id}>
+                      <TouchableOpacity
+                        style={styles.subDropdown}
+                        onPress={() => {
+                          if (document.id === 'AA275HT') {
+                            toggleSubDropdownAlfa(); // Toggle for "AA275HT" (Alfa)
+                          } else if (document.id === 'AB369ES') {
+                            toggleSubDropdownToyota(); // Toggle for "AB369ES" (Toyota)
+                          }
+                        }}
+                      >
+                        <Text style={styles.subDropdownText}>
+                          {document.name} - {document.id}
+                        </Text>
+                        <Text style={styles.arrow}>
+                          {document.id === 'AA275HT' && isAlfaOpen ? (
+                            <ChevronUp width={width * 0.1} height={width * 0.1} color="#0066FF" />
+                          ) : (
+                            <ChevronDown width={width * 0.1} height={width * 0.1} color="#0066FF" />
+                          )}
+                        </Text>
+
+                      </TouchableOpacity>
+
+                      {/* Sub-Dropdown Content */}
+                      {document.id === 'AA275HT' && isAlfaOpen && (
+                        <View>
+                          {documentss.map((subdocument) => (
+                            <View key={subdocument.id}>
+                              <TouchableOpacity
+                                style={styles.subDropdown1}
+                                onPress={() => {
+                                  navigatetopolizascreen();
+                                }}
+                              >
+                                <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
+                                <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                              </TouchableOpacity>
+                              <View style={styles.singleBox}>
+                                <TouchableOpacity style={styles.button}>
+                                  <Image
+                                    source={require('../../../assets/images/editar.jpg')} // Replace with your image path
+                                    style={styles.icon}
+                                  />
+                                  <Text style={styles.buttonText}>Editar</Text>
+                                </TouchableOpacity>
+
+                                {/* Notas Button */}
+                                <TouchableOpacity style={styles.button}>
+                                  <Image
+                                    source={require('../../../assets/images/notes.png')} // Replace with your image path
+                                    style={styles.icon}
+                                  />
+                                  <Text style={styles.buttonText}>Notas</Text>
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+                      {document.id === 'AB369ES' && isToyotaOpen && (
+                        <View>
+                          {documentss.map((subdocument) => (
+                            <View key={subdocument.id}>
+                              <TouchableOpacity
+                                style={styles.subDropdown1}
+                                onPress={() => {
+                                  navigatetopolizascreen()// Handle navigation for Toyota
+                                }}
+                              >
+                                <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
+                                <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                              </TouchableOpacity>
+                              <View style={styles.singleBox}>
+                                <TouchableOpacity style={styles.button}>
+                                  <Image
+                                    source={require('../../../assets/images/editar.jpg')} // Replace with your image path
+                                    style={styles.icon}
+                                  />
+                                  <Text style={styles.buttonText}>Editar</Text>
+                                </TouchableOpacity>
+
+                                {/* Notas Button */}
+                                <TouchableOpacity style={styles.button}>
+                                  <Image
+                                    source={require('../../../assets/images/notes.png')} // Replace with your image path
+                                    style={styles.icon}
+                                  />
+                                  <Text style={styles.buttonText}>Notas</Text>
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          ))}
+                        </View>
+                      )}
+                    </View>
+                  ))}
+                  <View style={styles.singleBoxs}>
+                    <TouchableOpacity style={styles.button}>
+                      <Image
+                        source={require('../../../assets/images/editar.jpg')} // Replace with your image path
+                        style={styles.icon}
+                      />
+                      <Text style={styles.buttonText}>Editar</Text>
+                    </TouchableOpacity>
+
+                    {/* Notas Button */}
+                    <TouchableOpacity style={styles.button}>
+                      <Image
+                        source={require('../../../assets/images/notes.png')} // Replace with your image path
+                        style={styles.icon}
+                      />
+                      <Text style={styles.buttonText}>Notas</Text>
+                    </TouchableOpacity>
+                  </View>
+
+                </View>
+              )}
+
             </View>
 
-            {/* MIS VEHÍCULOS Container */}
-            <TouchableOpacity style={styles.mainDropdown} onPress={toggleMainDropdown}>
-              <Text style={styles.mainDropdownText}>SEUGRO/S</Text>
-              <Text style={styles.arrow}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
-            </TouchableOpacity>
-
-            {/* Dropdown Content */}
-            {isMainDropdownOpen && (
-              <View>
-               {documents.map((document) => (
-  <View key={document.id}>
-    <TouchableOpacity
-      style={styles.subDropdown}
-      onPress={() => {
-        if (document.id === 'AA275HT') {
-          toggleSubDropdownAlfa(); // Toggle for "AA275HT" (Alfa)
-        } else if (document.id === 'AB369ES') {
-          toggleSubDropdownToyota(); // Toggle for "AB369ES" (Toyota)
-        }
-      }}
-    >
-      <Text style={styles.subDropdownText}>
-        {document.name} - {document.id}
-      </Text>
-      <Text style={styles.arrow}>
-        {document.id === 'AA275HT' && isAlfaOpen ? '▲' : '▼'}
-      </Text>
-    </TouchableOpacity>
-    
-    {/* Sub-Dropdown Content */}
-    {document.id === 'AA275HT' && isAlfaOpen && (
-      <View>
-        {documentss.map((subdocument) => (
-          <View key={subdocument.id}>
-            <TouchableOpacity
-              style={styles.subDropdown1}
-              onPress={() => {
-                navigatetopolizascreen(); 
-              }}
-            >
-              <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
-              <Text style={styles.arrow}>▼</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    )}
-    {document.id === 'AB369ES' && isToyotaOpen && (
-      <View>
-        {documentss.map((subdocument) => (
-          <View key={subdocument.id}>
-            <TouchableOpacity
-              style={styles.subDropdown1}
-              onPress={() => {
-                navigatetopolizascreen()// Handle navigation for Toyota
-              }}
-            >
-              <Text style={styles.subDropdownText1}>{subdocument.name}</Text>
-              <Text style={styles.arrow}>▼</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </View>
-    )}
-  </View>
-))}
-
-                <View style={styles.singleBox}>
-                <TouchableOpacity style={styles.button}>
-                            <Image
-                              source={require('../../../assets/images/editar.jpg')} // Replace with your image path
-                              style={styles.icon}
-                            />
-                            <Text style={styles.buttonText}>Editar</Text>
-                          </TouchableOpacity>
-
-                          {/* Notas Button */}
-                          <TouchableOpacity style={styles.button}>
-                            <Image
-                              source={require('../../../assets/images/notes.png')} // Replace with your image path
-                              style={styles.icon}
-                            />
-                            <Text style={styles.buttonText}>Notas</Text>
-                          </TouchableOpacity>
-                </View>
-              </View>
-            )}
 
           </View>
-
-
-        </View>
+        </ImageBackground>
       </ImageBackground>
       <Navbar />
     </SafeAreaView>
@@ -186,12 +245,14 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: '100%',
-    height: height * 0.3,
   },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(9,109,249,0.1)',
+  overlayImage: {
+    flex: 1,
+    width: '100%',
+    height: height * 0.28,
+    resizeMode: 'contain',
   },
+
   keyboardView: {
     flex: 1,
   },
@@ -206,6 +267,9 @@ const styles = StyleSheet.create({
   },
   backgroundImageStyle: {
     opacity: 0.1,
+  },
+  mainDropdownOpen: {
+    backgroundColor: 'silver',
   },
   mainDropdownWrapper: {
     paddingTop: height * 0.046,
@@ -252,11 +316,14 @@ const styles = StyleSheet.create({
   },
   borderedContainer: {
     flex: 1,
-    margin: width * 0.05,
+    margin: width * 0.05, // Responsive margin
+    marginBlockEnd: 0,
     borderWidth: 1,
-    borderColor: '#f8f9fa',
-    borderRadius: 15,
+    borderColor: '#0098FE',
+    borderRadius: 25,
     overflow: 'hidden',
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   icons: {
     flexDirection: 'row',
@@ -333,9 +400,23 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: width * 0.55,
+    marginTop: width * 0.8,
     elevation: 3,
     width: '100%',
+  },
+  singleBoxs: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    paddingVertical: height * 0.015,
+    backgroundColor: '#f0f0f0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginTop: width * 0.75,
+    elevation: 3,
+    width: '100%'
   },
   button: {
     alignItems: 'center',

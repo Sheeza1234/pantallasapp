@@ -6,9 +6,10 @@ import {
   TouchableOpacity,
   Dimensions,
   ImageBackground,
-  Platform
+  StatusBar
 } from 'react-native';
 import { FileText } from 'react-native-feather';
+import { useEffect } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
 import { useNavigation } from 'expo-router';
@@ -22,6 +23,11 @@ type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pinentry'>
 const { width, height } = Dimensions.get('window'); // Get screen dimensions
 
 const Resumen: React.FC = () => {
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
 
   const navigation = useNavigation<NavigationProps>();
 
@@ -35,7 +41,7 @@ const Resumen: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../../assets/images/background.jpg')}
+        source={require('../../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -45,24 +51,24 @@ const Resumen: React.FC = () => {
             <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
           </View>
 
-        <TouchableOpacity style={styles.activityCard}>
-           <FileText stroke="black" width={50} height={40}
-            style={styles.icon}
-          />
-          <Text style={styles.activityText}>Resumen de Actividad</Text>
-        </TouchableOpacity>
-<View style={styles.boxContainer}>
-        {data.map((item, index) => (
-          <View key={index} style={styles.box}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.value}>{item.value}</Text>
+          <TouchableOpacity style={styles.activityCard}>
+            <FileText stroke="black" width={50} height={40}
+              style={styles.icon}
+            />
+            <Text style={styles.activityText}>Resumen de Actividad</Text>
+          </TouchableOpacity>
+          <View style={styles.boxContainer}>
+            {data.map((item, index) => (
+              <View key={index} style={styles.box}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.value}>{item.value}</Text>
+              </View>
+            ))}
           </View>
-        ))}
-      </View>
-      </View>
+        </View>
 
-        
-       <Navbar/>
+
+        <Navbar />
       </ImageBackground>
     </View>
   );
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   header: {
     backgroundColor: '#0066FF',

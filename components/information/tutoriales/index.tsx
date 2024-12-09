@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Platform,
   ImageBackground,
   FlatList,
+  StatusBar
 } from 'react-native';
+import { useEffect } from 'react';
 import { useNavigation } from 'expo-router';
 import Navbar from '@/components/navbar';
 import { PlayCircle } from 'react-native-feather';
@@ -22,9 +23,15 @@ interface Option {
   isTutorial?: boolean;
 }
 
-const { width,height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const Tutorials: React.FC = () => {
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
+
   const options: Option[] = [
     { id: '1', label: 'Tutoriales', isTutorial: true },
     { id: '2', label: '01 - Mis Vehículos' },
@@ -47,8 +54,8 @@ const Tutorials: React.FC = () => {
     >
       {item.isTutorial ? (
         <>
-           <PlayCircle stroke="black"  width={50} height={40}
-                     style={styles.tutorialIcon}
+          <PlayCircle stroke="black" width={50} height={40}
+            style={styles.tutorialIcon}
           />
           <Text style={styles.tutorialText}>{item.label}</Text>
         </>
@@ -61,7 +68,7 @@ const Tutorials: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../../assets/images/background.jpg')}
+        source={require('../../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   header: {
     backgroundColor: '#0066FF',
@@ -120,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     marginHorizontal: scale(10), // Scale margin for responsiveness
     marginVertical: verticalScale(2), // Use vertical scale for vertical margin
-    padding: scale(12), // Scale padding
+    padding: scale(8), // Scale padding
     borderRadius: scale(15), // Scale border radius
     borderWidth: moderateScale(1.5), // Use moderateScale for border width
     borderColor: '#0A7EE7',
@@ -134,7 +141,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   optionText: {
-    fontSize: scale(20), // Scale font size for option text
+    fontSize: scale(18), // Scale font size for option text
     fontWeight: '500',
     color: '#333',
   },

@@ -1,19 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
     StyleSheet,
     SafeAreaView,
     TouchableOpacity,
-    ScrollView,
-    Modal,
-    FlatList,
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
-import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
+import { ChevronDown, ChevronUp, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '../../navbar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
@@ -73,109 +70,143 @@ export default function GastrosInfoScreen() {
     const navigatetoserviciosnoscreen = () => {
         navigation.navigate('Servicosno');
     }
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
+
 
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../assets/images/Gastos.jpg')}
+                source={require('../../../assets/images/background1.jpg')}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             >
-                <View style={styles.overlay} />
-                <View style={styles.borderedContainer}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>INFORMACIÓN </Text>
-                        <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
-                    </View>
-                    <View style={styles.mainDropdownWrapper}>
-                        {/* Circle (Icon) */}
-                        <View style={styles.iconContainer}>
-                            <Image
-                                source={require('../../../assets/images/Iconos/PNG/Gastos.png')}
-                                style={styles.iconImage}
-                            />
+
+                <ImageBackground
+                    source={isMainDropdownOpen
+                        ? require('../../../assets/images/gastos1.jpg') // Change to the new overlay image
+                        : require('../../../assets/images/Gastos.jpg')} // Original overlay image
+                    style={styles.overlayImage}
+                >
+
+                    <View style={styles.borderedContainer}>
+                        <View style={styles.header}>
+                            <Text style={styles.headerText}>INFORMACIÓN </Text>
+                            <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
+                        </View>
+                        <View style={styles.mainDropdownWrapper}>
+                            {/* Circle (Icon) */}
+                            <View style={styles.iconContainer}>
+                                <Image
+                                    source={require('../../../assets/images/Iconos/PNG/Gastos.png')}
+                                    style={styles.iconImage}
+                                />
+                            </View>
+
+
+                            <TouchableOpacity
+                                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                                onPress={toggleMainDropdown}
+                            >
+
+                                <Text style={styles.mainDropdownText}>GASTOS</Text>
+                                <Text style={styles.arrow}> {isMainDropdownOpen ? (
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                ) : (
+                                    <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
+                                )}</Text>
+                            </TouchableOpacity>
+
+                            {/* Dropdown Content */}
+                            {isMainDropdownOpen && (
+                                <View>
+                                    {documents.map((document) => (
+                                        <View key={document.id}>
+                                            <TouchableOpacity
+                                                style={styles.subDropdown}
+                                                onPress={() => {
+                                                    if (document.id === 'combustible') {
+                                                        toggleSubDropdownAlfa();
+                                                    } else if (document.id === 'servicios') {
+                                                        toggleSubDropdownServicios();
+                                                    }
+                                                }}
+                                            >
+                                                <Text style={styles.subDropdownText}>
+                                                    {document.name}
+                                                </Text>
+                                                <Text style={styles.arrow}>
+                                                    {document.id === 'combustible' && isAlfaOpen ? (
+                                                        <ChevronUp width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                    ) : (
+                                                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                                                    )}
+                                                </Text>
+                                            </TouchableOpacity>
+
+                                            {/* Sub-Dropdown Content */}
+                                            {document.id === 'combustible' && isAlfaOpen && (
+                                                <View>
+                                                    {documentss.map((subdocument) => (
+                                                        <View key={subdocument.id}>
+                                                            <TouchableOpacity
+                                                                style={styles.subDropdown1}
+                                                                onPress={() => {
+                                                                    navigatetocombustiblescreen();
+                                                                }}
+                                                            >
+                                                                <Text style={styles.subDropdownText1}>{subdocument.id}{subdocument.name}</Text>
+                                                                <ChevronDown
+                                                                    width={width * 0.09}
+                                                                    height={width * 0.09}
+                                                                    color="#0066FF"
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </View>
+                                                    ))}
+                                                </View>
+                                            )}
+                                            {document.id === 'servicios' && isServiciosOpen && (
+                                                <View>
+                                                    {documentes.map((subdocuments) => (
+                                                        <View key={subdocuments.id}>
+                                                            <TouchableOpacity
+                                                                style={styles.subDropdown1}
+                                                                onPress={() => {
+                                                                    if (subdocuments.id === 'servicos') {
+                                                                        navigatetoserviciosscreen()
+                                                                    } else if (subdocuments.id === 'servicosno') {
+                                                                        navigatetoserviciosnoscreen()
+                                                                    }
+                                                                }}
+                                                            >
+                                                                <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
+                                                                <ChevronDown
+                                                                    width={width * 0.09}
+                                                                    height={width * 0.09}
+                                                                    color="#0066FF"
+                                                                />
+                                                            </TouchableOpacity>
+                                                        </View>
+
+                                                    ))}
+                                                </View>
+                                            )}
+                                        </View>
+                                    ))}
+
+
+                                </View>
+                            )}
+
                         </View>
 
-                        {/* MIS VEHÍCULOS Container */}
-                        <TouchableOpacity style={styles.mainDropdown} onPress={toggleMainDropdown}>
-                            <Text style={styles.mainDropdownText}>GASTOS</Text>
-                            <Text style={styles.arrow}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
-                        </TouchableOpacity>
-
-                        {/* Dropdown Content */}
-                        {isMainDropdownOpen && (
-                            <View>
-                                {documents.map((document) => (
-                                    <View key={document.id}>
-                                        <TouchableOpacity
-                                            style={styles.subDropdown}
-                                            onPress={() => {
-                                                if (document.id === 'combustible') {
-                                                    toggleSubDropdownAlfa();
-                                                } else if (document.id === 'servicios') {
-                                                    toggleSubDropdownServicios();
-                                                }
-                                            }}
-                                        >
-                                            <Text style={styles.subDropdownText}>
-                                                {document.name}
-                                            </Text>
-                                            <Text style={styles.arrow}>
-                                                {document.id === 'combustible' && isAlfaOpen ? '▲' : '▼'}
-                                            </Text>
-                                        </TouchableOpacity>
-
-                                        {/* Sub-Dropdown Content */}
-                                        {document.id === 'combustible' && isAlfaOpen && (
-                                            <View>
-                                                {documentss.map((subdocument) => (
-                                                    <View key={subdocument.id}>
-                                                        <TouchableOpacity
-                                                            style={styles.subDropdown1}
-                                                            onPress={() => {
-                                                                navigatetocombustiblescreen();
-                                                            }}
-                                                        >
-                                                            <Text style={styles.subDropdownText1}>{subdocument.id}{subdocument.name}</Text>
-                                                            <Text style={styles.arrow}>▼</Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                ))}
-                                            </View>
-                                        )}
-                                        {document.id === 'servicios' && isServiciosOpen && (
-                                            <View>
-                                                {documentes.map((subdocuments) => (
-                                                    <View key={subdocuments.id}>
-                                                        <TouchableOpacity
-                                                            style={styles.subDropdown1}
-                                                            onPress={() => {
-                                                                if (subdocuments.id === 'servicos') {
-                                                                    navigatetoserviciosscreen()
-                                                                } else if (subdocuments.id === 'servicosno') {
-                                                                    navigatetoserviciosnoscreen()
-                                                                }
-                                                            }}
-                                                        >
-                                                            <Text style={styles.subDropdownText1}>{subdocuments.name}</Text>
-                                                            <Text style={styles.arrow}>▼</Text>
-                                                        </TouchableOpacity>
-                                                    </View>
-
-                                                ))}
-                                            </View>
-                                        )}
-                                    </View>
-                                ))}
-
-
-                            </View>
-                        )}
 
                     </View>
-
-
-                </View>
+                </ImageBackground>
             </ImageBackground>
             <Navbar />
         </SafeAreaView>
@@ -190,11 +221,13 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: height * 0.3,
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.1)',
+    overlayImage: {
+        flex: 1,
+        width: '100%',
+        height: height * 0.28,
+        resizeMode: 'contain',
+
     },
     keyboardView: {
         flex: 1,
@@ -256,11 +289,14 @@ const styles = StyleSheet.create({
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
     icons: {
         flexDirection: 'row',
@@ -294,6 +330,9 @@ const styles = StyleSheet.create({
         borderColor: '#0066FF',
         borderRadius: 15,
         width: '95%',
+    },
+    mainDropdownOpen: {
+        backgroundColor: 'silver',
     },
     subDropdownText: {
         fontSize: width * 0.045,

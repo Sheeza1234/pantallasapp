@@ -9,8 +9,10 @@ import {
   Platform,
   ImageBackground,
   FlatList,
+  StatusBar
 } from 'react-native';
 import { useNavigation } from 'expo-router';
+import { useEffect } from 'react';
 import Navbar from '@/components/navbar';
 import { PlayCircle, Settings, User } from 'react-native-feather';
 import { scale, verticalScale } from 'react-native-size-matters'; // If using react-native-size-matters for scaling
@@ -25,13 +27,19 @@ interface Option {
 const { width, height } = Dimensions.get('window');
 
 
+
 const Adjustes: React.FC = () => {
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
   const options: Option[] = [
     { id: '1', label: 'Adjustes', isTutorial: true },
     { id: '2', label: '' },
     { id: '3', label: '' },
     { id: '4', label: '' },
-  
+
   ];
 
   const handleOptionPress = (label: string) => {
@@ -44,8 +52,8 @@ const Adjustes: React.FC = () => {
     >
       {item.isTutorial ? (
         <>
-           <Settings stroke="black"  width={50} height={40}
-                     style={styles.tutorialIcon}
+          <Settings stroke="black" width={50} height={40}
+            style={styles.tutorialIcon}
           />
           <Text style={styles.tutorialText}>{item.label}</Text>
         </>
@@ -58,7 +66,7 @@ const Adjustes: React.FC = () => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../../../assets/images/background.jpg')}
+        source={require('../../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   header: {
     backgroundColor: '#0066FF',

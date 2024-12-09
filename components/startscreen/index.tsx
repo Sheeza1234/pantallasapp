@@ -11,7 +11,9 @@ import {
     KeyboardAvoidingView,
     Platform,
     ImageBackground,
+    StatusBar
 } from 'react-native';
+import { useEffect } from 'react';
 import Svg, { Circle, Text as SvgText } from 'react-native-svg';
 
 interface FormData {
@@ -38,6 +40,12 @@ export default function RegisterScreen() {
         phone: '',
         password: '',
     });
+
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     const handleSubmit = () => {
         console.log('Form submitted:', formData);
@@ -235,7 +243,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#0066FF',
-        fontSize: 16,
+        fontSize: 15,
         fontWeight: 'bold',
     },
 });

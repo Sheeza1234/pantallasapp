@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -11,9 +11,9 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    Platform
+    StatusBar
 } from 'react-native';
-import { ChevronDown, Plus, ArrowLeft, Menu } from 'react-native-feather';
+import { ChevronDown, ChevronUp, Plus, ArrowLeft, Menu } from 'react-native-feather';
 import Navbar from '@/components/navbar';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
@@ -51,7 +51,11 @@ export default function LocationInfoScreen() {
     const navigation = useNavigation<NavigationProps>();
     const [isAlfaOpen, setIsAlfaOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
-
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
     const toggleSubDropdownAlfa = () => {
         setIsAlfaOpen((prev) => !prev);
         if (isServiciosOpen) setIsServiciosOpen(false); // Close Servicios if open
@@ -77,63 +81,79 @@ export default function LocationInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../assets/images/location.jpg')}
+                source={require('../../../assets/images/background1.jpg')}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             >
-                <View style={styles.overlay} />
-                <View style={styles.borderedContainer}>
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>INFORMACIÓN </Text>
-                        <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
-                    </View>
-                    <View style={styles.mainDropdownWrapper}>
-                        {/* Circle (Icon) */}
-                        <View style={styles.iconContainer}>
-                            <Image
-                                source={require('../../../assets/images/Iconos/PNG/Geolocalizacion.png')}
-                                style={styles.iconImage}
-                            />
+
+                <ImageBackground
+                    source={isMainDropdownOpen
+                        ? require('../../../assets/images/geolocalization1.jpg') // Change to the new overlay image
+                        : require('../../../assets/images/location.jpg')} // Original overlay image
+                    style={styles.overlayImage}
+                >
+
+                    <View style={styles.borderedContainer}>
+                        <View style={styles.header}>
+                            <Text style={styles.headerText}>INFORMACIÓN </Text>
+                            <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
+                        </View>
+                        <View style={styles.mainDropdownWrapper}>
+                            {/* Circle (Icon) */}
+                            <View style={styles.iconContainer}>
+                                <Image
+                                    source={require('../../../assets/images/Iconos/PNG/Geolocalizacion.png')}
+                                    style={styles.iconImage}
+                                />
+                            </View>
+
+
+                            <TouchableOpacity
+                                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                                onPress={toggleMainDropdown}
+                            >
+
+                                <Text style={styles.mainDropdownText}>GEOLOCALIZACION</Text>
+                                <Text style={styles.arrow}> {isMainDropdownOpen ? (
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                ) : (
+                                    <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
+                                )}</Text>
+                            </TouchableOpacity>
+
+                            {/* Dropdown Content */}
+                            {isMainDropdownOpen && (
+                                <View style={styles.box}>
+                                    {documents.map((document) => (
+                                        <View key={document.id} style={styles.itemContainer} >
+                                            <Image source={document.icon} style={styles.itemIcon} />
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    if (document.id === 'vehicle') {
+                                                        navigatetocombustiblescreen()
+                                                    } else if (document.id === 'estancio') {
+                                                        navigatetoestancioscreen()
+                                                    }
+                                                }}
+                                            >
+                                                <Text style={styles.subDropdownText}>
+                                                    {document.name}
+                                                </Text>
+                                            </TouchableOpacity>
+
+
+                                        </View>
+                                    ))}
+
+
+                                </View>
+                            )}
+
                         </View>
 
-                        {/* MIS VEHÍCULOS Container */}
-                        <TouchableOpacity style={styles.mainDropdown} onPress={toggleMainDropdown}>
-                            <Text style={styles.mainDropdownText}>GEOLOCALIZACION</Text>
-                            <Text style={styles.arrow}>{isMainDropdownOpen ? '▲' : '▼'}</Text>
-                        </TouchableOpacity>
-
-                        {/* Dropdown Content */}
-                        {isMainDropdownOpen && (
-                            <View style={styles.box}>
-                                {documents.map((document) => (
-                                    <View key={document.id} style={styles.itemContainer} >
-                                        <Image source={document.icon} style={styles.itemIcon} />
-                                        <TouchableOpacity
-                                            onPress={() => {
-                                                if (document.id === 'vehicle') {
-                                                    navigatetocombustiblescreen()
-                                                } else if (document.id === 'estancio') {
-                                                    navigatetoestancioscreen()
-                                                }
-                                            }}
-                                        >
-                                            <Text style={styles.subDropdownText}>
-                                                {document.name}
-                                            </Text>
-                                        </TouchableOpacity>
-
-
-                                    </View>
-                                ))}
-
-
-                            </View>
-                        )}
 
                     </View>
-
-
-                </View>
+                </ImageBackground>
             </ImageBackground>
             <Navbar />
         </SafeAreaView>
@@ -148,11 +168,13 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
-        height: height * 0.3,
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.1)',
+    overlayImage: {
+        flex: 1,
+        width: '100%',
+        height: height * 0.28,
+        resizeMode: 'contain',
+
     },
     keyboardView: {
         flex: 1,
@@ -168,6 +190,9 @@ const styles = StyleSheet.create({
     },
     backgroundImageStyle: {
         opacity: 0.1,
+    },
+    mainDropdownOpen: {
+        backgroundColor: 'silver',
     },
     mainDropdownWrapper: {
         paddingTop: height * 0.046,
@@ -185,21 +210,21 @@ const styles = StyleSheet.create({
         position: 'absolute',
     },
     itemContainer: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        marginBottom: 10, 
-        paddingHorizontal: 10, 
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 10,
+        paddingHorizontal: 10,
     },
     itemIcon: {
-        width: 40, 
-        height: 30, 
-        marginRight: 10, 
-        resizeMode: 'contain', 
+        width: 40,
+        height: 30,
+        marginRight: 10,
+        resizeMode: 'contain',
     },
     itemText: {
-        fontSize: 16, 
-        color: '#333', 
-        fontWeight: 'bold', 
+        fontSize: 16,
+        color: '#333',
+        fontWeight: 'bold',
     },
 
     mainDropdown: {
@@ -240,11 +265,14 @@ const styles = StyleSheet.create({
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
     icons: {
         flexDirection: 'row',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -8,41 +8,53 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../../navbar';
-import { CheckSquare } from 'react-native-feather';
-import * as ImagePicker from 'expo-image-picker';
-
+import { CheckSquare, ChevronDown } from 'react-native-feather';
 const { width, height } = Dimensions.get('window');
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@/types';
+import { useNavigation } from 'expo-router';
+import { ScrollView } from 'react-native-gesture-handler';
+
+type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pinentry'>;
+
 
 export default function Remdio200InfoScreen() {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const pickImage = async () => {
-        // Request permissions to access media library
-        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    
-        if (permissionResult.granted === false) {
-          alert('Permission to access gallery is required!');
-          return;
-        }
-    
-        // Open image picker
-        const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsEditing: true,
-          quality: 1,
-        });
-    
-        if (!result.canceled && result.assets?.[0]?.uri) {
-          setSelectedImage(result.assets[0].uri); // Set selected image URI
-        }
-      };
-    
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const navigation = useNavigation<NavigationProps>();
+
+    const checklistItems = [
+        { item: "Tanque de Combustible", id: '' },
+        { item: "Fluidos         ", id: 'fluidos' },
+        { item: "Luces               ", id: 'luces' },
+        { item: "Neumáticos", id: 'neumaticos' },
+        { item: "Equipo de Emergencias", id: 'equipo' },
+        { item: "Extintor de Incendios", id: 'de' },
+        { item: "Crique", id: '' },
+        { item: "DocumentaciónVehículo", id: 'del' },
+        { item: "Otros", id: 'otros' },
+    ];
+
+    const toggleSelection = (item: string) => {
+        setSelectedItems((prevSelected) =>
+            prevSelected.includes(item)
+                ? prevSelected.filter((i) => i !== item) // Remove item if already selected
+                : [...prevSelected, item]               // Add item if not selected
+        );
+    };
+
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../../../assets/images/background.jpg')}
+                source={require('../../../../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
                 resizeMode="cover"
@@ -54,43 +66,86 @@ export default function Remdio200InfoScreen() {
                     </View>
 
                     <TouchableOpacity style={styles.subDropdown} >
-                    <Image
-                                source={require('../../../../../assets/images/Iconos/checklist.png')}
-                                style={styles.icon}
-                            />
+                        <Image
+                            source={require('../../../../../assets/images/Iconos/checklist.png')}
+                            style={styles.icon}
+                        />
                         <Text style={styles.subDropdownText}>
-                        Check List Pre - Viaje
+                            Check List Pre - Viaje
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.subDropdown1} >
                         <Text style={styles.subDropdownText1}>
-                           Alfa Romeo  AA275HT
+                            Alfa Romeo  AA275HT
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
                     </TouchableOpacity>
-                    <View style={styles.checklistContainer}>
-              {[
-                "Tanque de Combustible Lleno",
-                "Fluidos",
-                "Luces",
-                "Neumáticos",
-                "Equipo de Emergencias",
-                "Extintor de Incendios",
-                "Crique",
-                "Documentación del Vehículo",
-                "Otros",
-              ].map((item) => (
-                <View style={styles.checklistItem} key={item}>
-                  <Text style={styles.checklistText}>{item}</Text>
-                  <CheckBox
-                    // value={isChecked.includes(item)}
-                    // onValueChange={() => toggleChecklistItem(item)}
-                  />
+                    <TouchableOpacity style={styles.subDropdown1} >
+                        <Text style={styles.subDropdownText1}>
+                            Recorrido Menor a 500km
+                        </Text>
+                        <ChevronDown width={width * 0.09} height={width * 0.09} color="#0066FF" />
+                    </TouchableOpacity>
+
+                    <ScrollView>
+                        <View>
+                            {checklistItems.map((checklistItem, index) => (
+                                <TouchableOpacity
+                                    style={styles.checklistItem}
+                                    key={checklistItem.id || index}
+                                    onPress={() => {
+                                        if (checklistItem) { toggleSelection(checklistItem.item) }
+                                        if (checklistItem.id === 'fluidos') {
+                                            navigation.navigate('fluidos')
+                                        } else if (checklistItem.id === 'luces') {
+                                            navigation.navigate('luces')
+                                        } else if (checklistItem.id === 'neumaticos') {
+                                            navigation.navigate('neumaticos')
+                                        } else if (checklistItem.id === 'equipo') {
+                                            navigation.navigate('equipo')
+                                        } else if (checklistItem.id === 'del') {
+                                            navigation.navigate('del')
+                                        } else if (checklistItem.id === 'otros') {
+                                            navigation.navigate('otros')
+                                        }
+
+                                    }}
+                                >
+                                    <View style={styles.subDropdown2}>
+                                        <Text style={styles.subDropdownText2}>{checklistItem.item} </Text>
+                                        <View style={styles.iconsContainer}>
+                                            <ChevronDown
+                                                width={width * 0.09}
+                                                height={width * 0.09}
+                                                color="#0066FF"
+                                            />
+                                            <CheckSquare
+                                                color={
+                                                    selectedItems.includes(checklistItem.item)
+                                                        ? "#0066FF"
+                                                        : "black"
+                                                }
+                                                width={width * 0.07}
+                                                height={width * 0.07}
+                                            />
+                                        </View>
+
+                                    </View>
+
+                                </TouchableOpacity>
+                            ))}
+                            <TouchableOpacity style={styles.subDropdown3} onPress={() => navigation.navigate('CheckList')}>
+                                <Text style={styles.subDropdownText3}>
+                                    Recomendaciones
+                                </Text>
+                                <ChevronDown width={width * 0.09} height={width * 0.09} color="#B7B7B7" />
+                            </TouchableOpacity>
+
+
+                        </View>
+                    </ScrollView>
                 </View>
-              ))}
-            </View>
-                  </View>
             </ImageBackground>
             <Navbar />
         </SafeAreaView>
@@ -100,21 +155,24 @@ export default function Remdio200InfoScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'white',
+        // backgroundColor: 'white',
     },
     background: {
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.1,
+        opacity: 0.3,
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: 'blue',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
     },
     header: {
         backgroundColor: '#0066FF',
@@ -145,16 +203,37 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: '95%',
     },
+    iconsContainer: {
+        flexDirection: 'row', // Arrange icons horizontally
+        alignItems: 'center', // Vertically align icons
+    },
     icon: {
         width: width * 0.1,
         height: width * 0.09,
         marginBottom: height * 0.005,
     },
     subDropdownText: {
-        fontSize: width * 0.07,
+        fontSize: width * 0.06,
         fontWeight: '800',
         color: '#0066FF',
         // marginLeft: 10,
+    },
+    subDropdown3: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: height * 0.01,
+        margin: width * 0.01,
+        marginLeft: width * 0.26,
+        backgroundColor: '#0066FF',
+        borderRadius: 15,
+        width: width * 0.6,
+    },
+    subDropdownText3: {
+        fontSize: width * 0.05,
+        fontWeight: '900',
+        color: 'white',
+        marginLeft: 10,
     },
     subDropdown1: {
         flexDirection: 'row',
@@ -166,7 +245,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#0066FF',
         borderRadius: 15,
-        width: width*0.85,
+        width: width * 0.85,
     },
     subDropdownText1: {
         fontSize: width * 0.05,
@@ -174,33 +253,16 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 10,
     },
-    subDropdown3: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: height * 0.01,
-        margin: width * 0.01,
-        marginLeft: width*0.18,
-        backgroundColor: '#0066FF',
-        borderRadius: 15,
-        width: width*0.68,
-    },
-    subDropdownText3: {
-        fontSize: width * 0.05,
-        fontWeight: '900',
-        color: 'white',
-        marginLeft: 10,
-    },
+
     subDropdown2: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: height * 0.01,
-        margin: width * 0.02,
-        backgroundColor: '#0066FF',
         borderWidth: 1,
         borderRadius: 15,
-        width: width*0.85,
+        marginLeft: width * 0.26,
+        width: width * 0.6,
     },
     checklistContainer: {
         padding: 12,
@@ -208,22 +270,21 @@ const styles = StyleSheet.create({
         borderColor: "#ddd",
         borderRadius: 10,
         backgroundColor: "#fff",
-      },
-      checklistItem: {
+    },
+    checklistItem: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        paddingVertical: 8,
-      },
-      checklistText: {
+        paddingVertical: 5,
+    },
+    checklistText: {
         fontSize: 14,
         color: "#333",
-      },
+    },
     subDropdownText2: {
-        fontSize: width * 0.05,
+        fontSize: width * 0.035,
         fontWeight: '900',
-        color: 'white',
-        marginLeft: 10,
+        color: 'black',
     },
     arrow: {
         width: width * 0.1,
@@ -233,7 +294,7 @@ const styles = StyleSheet.create({
     arrows: {
         fontSize: width * 0.07,
         color: '#B7B7B7',
-        
+
     },
     imageContainer: {
         alignItems: 'center',

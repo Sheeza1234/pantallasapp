@@ -39,6 +39,15 @@ import RomeoInfoScreen from '@/components/homepagedetails/location/romeo'
 import EstancioInfoScreen from '@/components/homepagedetails/location/estancio'
 import CheckListInfoScreen from '@/components/homepagedetails/servicios/checklist'
 import Remdio200InfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200'
+import FluidosInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/fluidos'
+import LucesInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/luces'
+import NeumaticosInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/neumaticos'
+import EquipoInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/equipo'
+import DelInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/del'
+import OtrosInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio200/otros'
+import Remdio500InfoScreen from '@/components/homepagedetails/servicios/checklist/remdio500'
+import Remdio2000InfoScreen from '@/components/homepagedetails/servicios/checklist/remdio2000'
+import RevisarInfoScreen from '@/components/homepagedetails/servicios/checklist/remdio2000/revisar'
 
 const { Navigator, Screen } = createStackNavigator()
 
@@ -86,6 +95,15 @@ const AppNavigator = () => {
             <Screen name="Estancio" component={EstancioInfoScreen} />
             <Screen name="CheckList" component={CheckListInfoScreen} />
             <Screen name="Remdio200" component={Remdio200InfoScreen}/>
+            <Screen name="fluidos" component={FluidosInfoScreen}/>
+            <Screen name="luces" component={LucesInfoScreen}/>
+            <Screen name='neumaticos' component={NeumaticosInfoScreen}/>
+            <Screen name='equipo' component={EquipoInfoScreen}/>
+            <Screen name="del" component={DelInfoScreen}/>
+            <Screen name="otros" component={OtrosInfoScreen}/>
+            <Screen name="Remdio500" component={Remdio500InfoScreen}/>
+            <Screen name="Remdio2000" component={Remdio2000InfoScreen}/>
+            <Screen name="Revisar" component={RevisarInfoScreen}/>
         </Navigator>
     )
 }

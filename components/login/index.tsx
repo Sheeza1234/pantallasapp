@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     View,
@@ -10,14 +10,13 @@ import {
     KeyboardAvoidingView,
     Platform,
     Image,
-    ImageBackground, Dimensions
+    ImageBackground, Dimensions, StatusBar
 } from 'react-native';
 import Svg, { Circle, Text as SvgText, Path } from 'react-native-svg';
 import { useNavigation } from 'expo-router';
 import GoogleIcon from '../icons/icon';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
-// import Icon from 'react-native-vector-icons/MaterialIcons'; // Import the icon library
 
 type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Register'>;
 interface LoginMethod {
@@ -46,6 +45,12 @@ export default function LoginScreen() {
     const handleLogin = () => {
         navigation.navigate('Information')
     };
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
+
 
     const handleGoogleLogin = () => {
     };
@@ -64,7 +69,7 @@ export default function LoginScreen() {
                     style={styles.backgroundImage}
                     resizeMode="cover"
                 >
-                    <View style={styles.overlay} />
+
                     <View style={styles.borderedContainer}>
                         <View style={styles.content}>
                             <View style={styles.logoContainer}>
@@ -221,10 +226,7 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
     },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.9)',
-    },
+
     content: {
         flex: 1,
     },
@@ -232,7 +234,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     logoContainer: {
-        marginTop: height * 0.02, // Adjust logo container margin
+        marginTop: height * 0.01, // Adjust logo container margin
     },
     title: {
         fontSize: height * 0.04, // Adjust font size based on height
@@ -243,14 +245,14 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: height * 0.02, // Adjust font size based on height
         color: 'rgba(255, 255, 255, 0.8)',
-        marginBottom: height * 0.02, // Adjust margin dynamically
+        marginBottom: height * 0.01, // Adjust margin dynamically
         marginLeft: width * 0.08, // Adjust left margin dynamically
     },
     toggleContainer: {
         flexDirection: 'row',
         backgroundColor: 'white',
         borderRadius: 10,
-        marginBottom: height * 0.02, // Adjust bottom margin dynamically
+        marginBottom: height * 0.01, // Adjust bottom margin dynamically
         marginLeft: width * 0.08, // Adjust left margin dynamically
         width: '80%', // Use percentage width for responsiveness
     },
@@ -276,7 +278,7 @@ const styles = StyleSheet.create({
     },
     label: {
         color: 'white',
-        marginBottom: height * 0.02, // Adjust margin based on height
+        marginBottom: height * 0.01, // Adjust margin based on height
         fontSize: height * 0.02, // Adjust font size based on height
         width: '80%',
         borderRadius: 10,
@@ -351,7 +353,8 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         gap: 4,
-        // marginBottom: height * 0.1, // Adjust margin bottom dynamically
+        marginTop: height * 0.02,
+        marginBottom: height * 0.1, // Adjust margin bottom dynamically
         marginLeft: width * 0.08, // Adjust left margin dynamically
     },
     countrySelector: {
@@ -359,11 +362,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'white',
         borderRadius: 10,
-        paddingHorizontal: width * 0.05, // Adjust padding horizontally based on width
-        paddingVertical: height * 0.015, // Adjust padding vertically based on height
+        paddingHorizontal: width * 0.02, // Adjust padding horizontally based on width
+        paddingVertical: height * 0.013, // Adjust padding vertically based on height
     },
     flag: {
-        fontSize: height * 0.02, // Adjust font size based on height
+        fontSize: height * 0.015, // Adjust font size based on height
         marginRight: width * 0.02, // Adjust margin based on width
     },
     countryCode: {
@@ -378,10 +381,10 @@ const styles = StyleSheet.create({
     phoneInput: {
         backgroundColor: 'white',
         borderRadius: 10,
-        paddingHorizontal: width * 0.05, // Adjust padding horizontally based on width
+        paddingHorizontal: width * 0.0, // Adjust padding horizontally based on width
         fontSize: height * 0.02, // Adjust font size based on height
-        marginBottom: height * 0.02, // Adjust margin based on height
-        width: '61%',
+        marginBottom: height * 0.03, // Adjust margin based on height
+        width: '58%',
         height: '100%',
     },
     smsButton: {

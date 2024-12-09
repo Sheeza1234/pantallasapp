@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,10 +8,10 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  Image
+  Image,
+  StatusBar
 } from 'react-native';
 import { Eye, EyeOff } from 'react-native-feather';
-import Svg, { Circle, Text as SvgText } from 'react-native-svg';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@/types';
 import { useNavigation } from 'expo-router';
@@ -43,6 +43,11 @@ export default function PinEntryScreen() {
   const togglePinVisibility = () => {
     setShowPin(!showPin);
   };
+  useEffect(() => {
+    StatusBar.setHidden(true);
+    StatusBar.setBackgroundColor('transparent');
+    StatusBar.setBarStyle('light-content');
+  }, []);
 
   const handleSubmit = () => {
 
@@ -53,7 +58,7 @@ export default function PinEntryScreen() {
     <SafeAreaView style={styles.container}>
 
       <ImageBackground
-        source={require('../../assets/images/background.jpg')}
+        source={require('../../assets/images/background1.jpg')}
         style={styles.backgroundImage}
         imageStyle={styles.backgroundImageStyle}
       >
@@ -129,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backgroundImageStyle: {
-    opacity: 0.1,
+    opacity: 0.3,
   },
   content: {
     flex: 1,
@@ -225,7 +230,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: scale(20),
     borderWidth: 1,
-    borderColor: '#f8f9fa',
+    borderColor: 'white',
     borderRadius: scale(15),
     overflow: 'hidden',
   },

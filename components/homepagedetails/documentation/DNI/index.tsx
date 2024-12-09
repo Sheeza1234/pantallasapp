@@ -8,9 +8,12 @@ import {
     ImageBackground,
     Dimensions,
     Image,
+    StatusBar
 } from 'react-native';
 import Navbar from '../../../navbar';
+import { ChevronDown } from 'react-native-feather';
 import * as ImagePicker from 'expo-image-picker';
+import { useEffect } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
@@ -22,6 +25,11 @@ export default function DniInfoScreen() {
         setIsMainDropdownOpen(!isMainDropdownOpen);
     };
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    useEffect(() => {
+        StatusBar.setHidden(true);
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setBarStyle('light-content');
+    }, []);
 
     const pickImage = async () => {
         // Request permissions to access media library
@@ -46,7 +54,7 @@ export default function DniInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../../assets/images/background.jpg')}
+                source={require('../../../../assets/images/background1.jpg')}
                 style={styles.background}
                 imageStyle={styles.backgroundImage}
                 resizeMode="cover"
@@ -61,19 +69,23 @@ export default function DniInfoScreen() {
                         <Text style={styles.subDropdownText}>
                             DNI
                         </Text>
-                        <Text style={styles.arrows}>▲</Text>
+                        <ChevronDown
+                            width={width * 0.09}
+                            height={width * 0.09}
+                            color="#0066FF"
+                        />
                     </TouchableOpacity>
                     <View>
-                            <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
-                                <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
-                                <Image
-                                    source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
-                                    style={styles.arrow}
-                                />
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity style={styles.subDropdown1} onPress={pickImage}>
+                            <Text style={styles.subDropdownText1}>Tomar Fotografía</Text>
+                            <Image
+                                source={require('../../../../assets/images/Iconos/PNG/camera.jpg')}
+                                style={styles.arrow}
+                            />
+                        </TouchableOpacity>
+                    </View>
 
-                
+
                 </View>
             </ImageBackground>
             <Navbar />
@@ -83,14 +95,13 @@ export default function DniInfoScreen() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: 'white',
+        flex: 1
     },
     background: {
         flex: 1,
     },
     backgroundImage: {
-        opacity: 0.1,
+        opacity: 0.3
     },
     borderedContainer: {
         flex: 1,
