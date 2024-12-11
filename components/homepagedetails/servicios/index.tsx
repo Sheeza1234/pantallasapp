@@ -118,7 +118,7 @@ export default function ServiciosInfoScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <ImageBackground
-                source={require('../../../assets/images/background.jpg')}
+                source={require('../../../assets/images/background1.jpg')}
                 style={styles.backgroundImage}
                 resizeMode="cover"
             >
