@@ -20,7 +20,7 @@ export default function TituloInfoScreen() {
     const [isMainDropdownOpen, setIsMainDropdownOpen] = useState(false);
     const [isMainDropdownOpen1, setIsMainDropdownOpen1] = useState(false);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

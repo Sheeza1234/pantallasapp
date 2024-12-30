@@ -30,7 +30,7 @@ export default function IdentificationInfoScreen() {
   }
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);

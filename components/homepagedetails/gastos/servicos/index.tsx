@@ -23,7 +23,7 @@ const { width, height } = Dimensions.get('window');
 export default function ServicosInfoScreen() {
     const navigation = useNavigation<NavigationProps>();
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

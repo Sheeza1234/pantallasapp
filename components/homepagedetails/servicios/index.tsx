@@ -110,7 +110,7 @@ export default function ServiciosInfoScreen() {
         );
     };
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);
@@ -136,10 +136,12 @@ export default function ServiciosInfoScreen() {
                         <View style={styles.mainDropdownWrapper}>
 
                             <View style={styles.iconContainer}>
-                                <Image
-                                    source={require('../../../assets/images/Iconos/PNG/Servicios.png')}
-                                    style={styles.iconImage}
-                                />
+                                <View style={styles.iconContainer1}>
+                                    <Image
+                                        source={require('../../../assets/images/Iconos/PNG/Servicios.png')}
+                                        style={styles.iconImage}
+                                    />
+                                </View>
                             </View>
 
                             <TouchableOpacity
@@ -149,7 +151,7 @@ export default function ServiciosInfoScreen() {
 
                                 <Text style={styles.mainDropdownText}>SERVICIOS</Text>
                                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                                 ) : (
                                     <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                                 )}</Text>
@@ -180,9 +182,12 @@ export default function ServiciosInfoScreen() {
 
                                                 >
                                                     <Text style={styles.subDropdownText}>
-                                                        {document.id}  {document.name}
+                                                        {document.id}
                                                     </Text>
                                                     <Text style={styles.arrow}>
+                                                        <Text style={styles.subDropdownText}>
+                                                            {document.name}
+                                                        </Text>
                                                         {document.id === 'AlfaRomeo' && isAlfaRomeoOpen ? (
                                                             <ChevronUp width={width * 0.09} height={width * 0.09} color="#0066FF" />
                                                         ) : (
@@ -449,7 +454,7 @@ const styles = StyleSheet.create({
         fontWeight: '800',
     },
     mainDropdownOpen: {
-        backgroundColor: 'silver',
+        backgroundColor: '#84898b',
     },
     scrollContent: {
         flexGrow: 1,
@@ -464,12 +469,23 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     iconContainer: {
-        width: width * 0.18,
-        height: width * 0.18,
+        width: width * 0.17,
+        height: width * 0.17,
+        borderRadius: width * 0.1,
+        backgroundColor: '#0066FF',
+        alignItems: 'center',
+        marginLeft: width * 0.015,
+        zIndex: 1,
+        position: 'absolute',
+    },
+    iconContainer1: {
+        width: width * 0.145,
+        height: width * 0.145,
         borderRadius: width * 0.1,
         backgroundColor: 'white',
         alignItems: 'center',
         marginLeft: width * 0.015,
+        marginTop: height * 0.006,
         zIndex: 1,
         position: 'absolute',
     },
@@ -487,9 +503,9 @@ const styles = StyleSheet.create({
         zIndex: 0,
     },
     iconImage: {
-        width: width * 0.4,
-        height: height * 0.1,
-        resizeMode: 'contain',
+        width: width * 0.2,
+        height: width * 0.15,
+        // resizeMode: 'contain',
     },
     mainDropdownText: {
         color: 'white',
@@ -573,7 +589,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         padding: height * 0.003,
-        margin: width * 0.009,
+        margin: width * 0.005,
         marginLeft: width * 0.19,
         backgroundColor: 'white',
         borderWidth: 1,
@@ -582,10 +598,10 @@ const styles = StyleSheet.create({
         width: '75%',
     },
     subDropdownText1: {
-        fontSize: width * 0.037,
+        fontSize: width * 0.032,
         fontWeight: '800',
         color: '#333',
-        marginLeft: width * 0.03,
+        // marginLeft: width * 0.03,
     },
     subItem: {
         fontSize: width * 0.045,
@@ -630,9 +646,9 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     itemIcon: {
-        width: 40,
+        width: 30,
         height: 30,
-        marginRight: 10,
+        // marginRight: 10,
         resizeMode: 'contain',
     },
 });

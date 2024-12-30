@@ -35,7 +35,7 @@ export default function EstancioInfoScreen() {
     const [isAlfaOpen, setIsAlfaOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

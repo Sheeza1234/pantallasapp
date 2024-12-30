@@ -32,7 +32,7 @@ const { width, height } = Dimensions.get('window');
 export default function RegisterScreen() {
     const navigation = useNavigation<NavigationProps>();
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

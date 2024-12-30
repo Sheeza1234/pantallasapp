@@ -20,7 +20,7 @@ export default function PolizaInfoScreen() {
     const [isMainDropdownOpen, setIsMainDropdownOpen] = useState(false);
 
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

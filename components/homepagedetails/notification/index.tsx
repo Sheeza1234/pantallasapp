@@ -74,7 +74,7 @@ export default function NoticicationInfoScreen() {
     const [isserviciosOpen, setIsserviciosOpen] = useState(false);
     const [isOpen, setIs1Open] = useState(false);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);
@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     backgroundImage: {
-     flex: 1, width: '100 %',opacity:0.3
+        flex: 1, width: '100 %', opacity: 0.3
     },
     overlayImage: {
         flex: 1,
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     mainDropdownOpen: {
-        backgroundColor: 'silver',
+        backgroundColor: '#84898b',
     },
     iconContainer: {
         width: width * 0.18,

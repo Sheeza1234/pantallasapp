@@ -71,7 +71,7 @@ export default function GastrosInfoScreen() {
         navigation.navigate('Servicosno');
     }
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);
@@ -100,10 +100,12 @@ export default function GastrosInfoScreen() {
                         <View style={styles.mainDropdownWrapper}>
                             {/* Circle (Icon) */}
                             <View style={styles.iconContainer}>
+                                <View style={styles.iconContainer1}>
                                 <Image
                                     source={require('../../../assets/images/Iconos/PNG/Gastos.png')}
                                     style={styles.iconImage}
                                 />
+                                </View>
                             </View>
 
 
@@ -114,7 +116,7 @@ export default function GastrosInfoScreen() {
 
                                 <Text style={styles.mainDropdownText}>GASTOS</Text>
                                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                                 ) : (
                                     <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                                 )}</Text>
@@ -146,6 +148,7 @@ export default function GastrosInfoScreen() {
                                                     )}
                                                 </Text>
                                             </TouchableOpacity>
+
 
                                             {/* Sub-Dropdown Content */}
                                             {document.id === 'combustible' && isAlfaOpen && (
@@ -250,12 +253,23 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
     iconContainer: {
-        width: width * 0.18,
-        height: width * 0.18,
+        width: width * 0.17,
+        height: width * 0.17,
+        borderRadius: width * 0.1,
+        backgroundColor: 'silver',
+        alignItems: 'center',
+        marginLeft: width * 0.015,
+        zIndex: 1,
+        position: 'absolute',
+    },
+    iconContainer1: {
+        width: width * 0.145,
+        height: width * 0.145,
         borderRadius: width * 0.1,
         backgroundColor: 'white',
         alignItems: 'center',
         marginLeft: width * 0.015,
+        marginTop: height * 0.006,
         zIndex: 1,
         position: 'absolute',
     },
@@ -273,15 +287,15 @@ const styles = StyleSheet.create({
         zIndex: 0,
     },
     iconImage: {
-        width: width * 0.4,
-        height: height * 0.1,
-        resizeMode: 'contain',
+        width: width * 0.2,
+        height: width * 0.15,
+        // resizeMode: 'contain',
     },
     mainDropdownText: {
         color: 'white',
         fontWeight: 'bold',
         fontSize: width * 0.07,
-        marginLeft: width * 0.05,
+        marginLeft: width * 0.2,
     },
     arrow: {
         fontSize: width * 0.08,
@@ -332,7 +346,7 @@ const styles = StyleSheet.create({
         width: '95%',
     },
     mainDropdownOpen: {
-        backgroundColor: 'silver',
+        backgroundColor: '#84898b',
     },
     subDropdownText: {
         fontSize: width * 0.045,

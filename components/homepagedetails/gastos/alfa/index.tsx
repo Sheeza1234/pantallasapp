@@ -36,7 +36,7 @@ export default function GastrosDetailInfoScreen() {
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
 
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

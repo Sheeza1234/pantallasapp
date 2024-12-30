@@ -34,7 +34,7 @@ export default function LvehicleInfoScreen() {
     const [openSubDropdown, setOpenSubDropdown] = useState<string | null>(null);
     const navigation = useNavigation<NavigationProps>();
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

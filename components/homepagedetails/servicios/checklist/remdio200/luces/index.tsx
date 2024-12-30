@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 
 export default function LucesInfoScreen() {
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

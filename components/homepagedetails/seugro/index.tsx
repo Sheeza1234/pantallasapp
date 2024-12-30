@@ -40,7 +40,7 @@ export default function SeugroInfoScreen() {
   const [isAlfaOpen, setIsAlfaOpen] = useState(false);
   const [isToyotaOpen, setIsToyotaOpen] = useState(false);
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);
@@ -95,9 +95,9 @@ export default function SeugroInfoScreen() {
                 onPress={toggleMainDropdown}
               >
 
-                <Text style={styles.mainDropdownText}>SEUGRO</Text>
+                <Text style={styles.mainDropdownText}>SEUGRO/S</Text>
                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                  <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                  <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                 ) : (
                   <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                 )}</Text>
@@ -119,9 +119,12 @@ export default function SeugroInfoScreen() {
                         }}
                       >
                         <Text style={styles.subDropdownText}>
-                          {document.name} - {document.id}
+                          {document.name}
                         </Text>
                         <Text style={styles.arrow}>
+                        <Text style={styles.subDropdownText}>
+                         {document.id}
+                        </Text>
                           {document.id === 'AA275HT' && isAlfaOpen ? (
                             <ChevronUp width={width * 0.1} height={width * 0.1} color="#0066FF" />
                           ) : (
@@ -307,8 +310,8 @@ const styles = StyleSheet.create({
   mainDropdownText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: width * 0.07,
-    marginLeft: width * 0.05,
+    fontSize: width * 0.06,
+    marginLeft: width * 0.18,
   },
   arrow: {
     fontSize: width * 0.08,
@@ -400,7 +403,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: width * 0.8,
+    marginTop: height * 0.3,
     elevation: 3,
     width: '100%',
   },
@@ -414,7 +417,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: width * 0.75,
+    marginTop: height * 0.36,
     elevation: 3,
     width: '100%'
   },

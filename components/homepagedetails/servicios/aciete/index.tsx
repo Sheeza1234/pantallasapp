@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get('window');
 export default function AcieteInfoScreen() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

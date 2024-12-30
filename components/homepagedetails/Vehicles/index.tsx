@@ -26,7 +26,7 @@ const vehicles = [
 const { width, height } = Dimensions.get('window')
 export default function VehicleInfoScreen() {
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);
@@ -94,9 +94,12 @@ export default function VehicleInfoScreen() {
                         onPress={() => toggleSubDropdown(vehicle.name)}
                       >
                         <Text style={styles.subDropdownText}>
-                          {vehicle.name} - {vehicle.id}
+                          {vehicle.name} 
                         </Text>
                         <Text style={styles.arrow}>
+                        <Text style={styles.subDropdownText}>
+                          {vehicle.id} 
+                        </Text>
                           {openSubDropdown === vehicle.name ? (
                             <ChevronUp
                               width={width * 0.09}
@@ -198,7 +201,7 @@ const styles = StyleSheet.create({
   },
   item: {
     color: '#0066FF',
-    fontSize: width * 0.045, // Responsive font size
+    fontSize: width * 0.04, // Responsive font size
     fontWeight: '800',
   },
   scrollContent: {
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     width: width * 0.2,
-    height: width * 0.2,
+    height: width * 0.185,
     borderRadius: width * 0.1,
     backgroundColor: 'white',
     alignItems: 'center',
@@ -303,7 +306,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   subItem: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.043,
     fontWeight: '800',
     color: '#555',
     paddingVertical: height * 0.007,

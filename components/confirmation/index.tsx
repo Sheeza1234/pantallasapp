@@ -38,7 +38,7 @@ export default function AccountConfirmation() {
     phone: "+51 921 393 148",
   };
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    opacity:0.3,
+    opacity: 0.3,
   },
 
   scrollContent: {

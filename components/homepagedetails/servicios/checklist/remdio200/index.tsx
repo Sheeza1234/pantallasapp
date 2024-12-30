@@ -24,7 +24,7 @@ type NavigationProps = NativeStackNavigationProp<RootStackParamList, 'Pinentry'>
 export default function Remdio200InfoScreen() {
 
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

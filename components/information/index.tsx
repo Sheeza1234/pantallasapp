@@ -35,7 +35,7 @@ const InformationScreen: React.FC = () => {
   ];
   const navigation = useNavigation<NavigationProps>();
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: height * 0.013, // Responsive vertical margin
+    marginVertical: height * 0.01, // Responsive vertical margin
     borderWidth: 2,
     borderColor: 'silver',
     shadowColor: '#000',

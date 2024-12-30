@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get('window'); // Get screen dimensions
 
 const Resumen: React.FC = () => {
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);

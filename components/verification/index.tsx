@@ -25,7 +25,7 @@ export default function SMSVerificationScreen() {
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef<Array<TextInput | null>>([]);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);

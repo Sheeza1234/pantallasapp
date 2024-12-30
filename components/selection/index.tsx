@@ -7,7 +7,9 @@ import {
   StyleSheet,
   Dimensions,
   ImageBackground,
-  Image, StatusBar
+  Image,
+  StatusBar,
+  Platform
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect } from 'react';
@@ -19,15 +21,18 @@ const { width, height } = Dimensions.get('window');
 
 export default function LanguageSelect() {
   const navigation = useNavigation<NavigationProps>();
+
   const handleLanguageSelect = (language: string) => {
     navigation.navigate('Login');
-
   };
 
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
+    if (Platform.OS === 'android') {
+      StatusBar.setTranslucent(true);
+    }
   }, []);
 
   return (
@@ -43,7 +48,8 @@ export default function LanguageSelect() {
             <View>
               <Image
                 source={require('../../assets/images/mainlogo.png')}
-                style={styles.image} />
+                style={styles.image}
+              />
             </View>
 
             {/* Language Buttons */}
@@ -72,7 +78,6 @@ export default function LanguageSelect() {
           </View>
         </View>
       </ImageBackground>
-
     </SafeAreaView>
   );
 }
@@ -80,6 +85,7 @@ export default function LanguageSelect() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'black', // Fallback background color
   },
   backgroundImage: {
     flex: 1,
@@ -97,7 +103,6 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.025,
     overflow: 'hidden',
   },
-
   buttonContainer: {
     width: '70%',
     maxWidth: 400,
@@ -105,20 +110,19 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
-    paddingVertical: height * 0.02, // Responsive padding
+    paddingVertical: height * 0.02,
     borderRadius: width * 0.028,
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
   },
   buttonText: {
     color: 'white',
-    fontSize: width * 0.05, // Responsive font size
+    fontSize: width * 0.05,
     textAlign: 'center',
     fontWeight: '400',
   },
   image: {
-    width: width * 0.8, // Responsive width based on screen width
-    height: height * 0.3, // Responsive height based on screen height
-    // resizeMode: 'contain', // Ensures the image maintains aspect ratio
+    width: width * 0.8,
+    height: height * 0.3,
   },
 });

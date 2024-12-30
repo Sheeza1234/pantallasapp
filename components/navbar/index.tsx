@@ -78,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuPress }) => {
                     onPress={handleBackPress}
                     activeOpacity={0.7}
                 >
-<Image
+                    <Image
                         source={require('../../assets/Menu Inferior Iconos/Menu-Inferior-Iconos-Fleca.png')}
                         style={styles.iconImage}
                     />
@@ -89,8 +89,8 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuPress }) => {
                     onPress={handleMenuPress}
                     activeOpacity={0.7}
                 >
-                 <Image
-                        source={require('../../assets/Menu Inferior Iconos/Menu-Inferior-Iconos-Usuario.png')}
+                    <Image
+                        source={require('../../assets/images/home.png')}
                         style={styles.iconImage}
                     />
                 </TouchableOpacity>
@@ -157,13 +157,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         backgroundColor: '#000',
-        height: scale(50), // Use scale for responsive height
+        height: scale(54), // Use scale for responsive height
         paddingVertical: scale(12),
         paddingBottom: Platform.OS === 'ios' ? scale(20) : 0, // Adjust for iOS status bar
     },
     iconImage: {
         width: scale(40),
-        height: scale(40),
+        height: scale(35),
         resizeMode: 'contain',
     },
     menuContainer: {
@@ -173,8 +173,8 @@ const styles = StyleSheet.create({
         height: scale(110),
         backgroundColor: 'black',
         borderRadius: scale(25),
-        borderColor:'white',
-        borderWidth:width*0.001,
+        borderColor: 'white',
+        borderWidth: width * 0.001,
         alignItems: 'center',
         flexDirection: 'row',
         marginLeft: '6.5%', // Center the menu based on the navbar's width
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
         marginBottom: scale(15),
-        marginLeft: scale(8), // Scaled margin
+        marginLeft: scale(15), // Scaled margin
     },
     activityText: {
         color: 'white',

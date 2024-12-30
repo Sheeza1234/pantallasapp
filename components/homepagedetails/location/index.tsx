@@ -27,7 +27,7 @@ interface Document {
     licensePlate: string;
 }
 const documents = [
-    { icon: require('../../../assets/images/vehicle.png'), name: 'Mis Vehiculos', id: 'vehicle' },
+    { icon: require('../../../assets/images/cars.png'), name: 'Mis Vehiculos', id: 'vehicle' },
     { icon: require('../../../assets/images/Iconos/PNG/esta.png'), name: 'Estacionamiento', id: 'miento' },
     { icon: require('../../../assets/images/Iconos/PNG/petrol-pump-icon.png'), name: 'Estaciones de Servicio', id: 'estancio' },
     { icon: require('../../../assets/images/Iconos/PNG/84137.png'), name: 'Acarreos de Vehiculos', id: 'servicios' },
@@ -52,7 +52,7 @@ export default function LocationInfoScreen() {
     const [isAlfaOpen, setIsAlfaOpen] = useState(false);
     const [isServiciosOpen, setIsServiciosOpen] = useState(false);
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);
@@ -115,7 +115,7 @@ export default function LocationInfoScreen() {
 
                                 <Text style={styles.mainDropdownText}>GEOLOCALIZACION</Text>
                                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                                 ) : (
                                     <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                                 )}</Text>
@@ -138,6 +138,7 @@ export default function LocationInfoScreen() {
                                             >
                                                 <Text style={styles.subDropdownText}>
                                                     {document.name}
+
                                                 </Text>
                                             </TouchableOpacity>
 
@@ -192,7 +193,7 @@ const styles = StyleSheet.create({
         opacity: 0.1,
     },
     mainDropdownOpen: {
-        backgroundColor: 'silver',
+        backgroundColor: '#84898b',
     },
     mainDropdownWrapper: {
         paddingTop: height * 0.046,
@@ -216,7 +217,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     itemIcon: {
-        width: 40,
+        width: 30,
         height: 30,
         marginRight: 10,
         resizeMode: 'contain',

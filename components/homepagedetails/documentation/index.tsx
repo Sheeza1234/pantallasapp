@@ -28,7 +28,7 @@ interface Document {
 const documents = [
   { name: 'Documentación', id: 'Requerida' },
   { name: 'Documentación', id: 'Vehicular' },
-  { name: 'DNI', id: '1' }
+  { name: 'DNI', id: '' }
 ];
 const documentss = [{ id: 1, name: 'Licencia Nacional de Conducir' },
 { id: 2, name: 'Cedula Identification Vehiculo' },
@@ -47,7 +47,7 @@ export default function DocumentInfoScreen() {
   const [isVehicularOpen, setIsVehicularOpen] = useState(false);
   const [isDniOpen, setIsDniOpen] = useState(false);
   useEffect(() => {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(false);
     StatusBar.setBackgroundColor('transparent');
     StatusBar.setBarStyle('light-content');
   }, []);
@@ -122,7 +122,7 @@ export default function DocumentInfoScreen() {
 
                 <Text style={styles.mainDropdownText}>DOCUMENTACION</Text>
                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                  <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                  <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                 ) : (
                   <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                 )}</Text>
@@ -145,7 +145,7 @@ export default function DocumentInfoScreen() {
                         }}
                       >
                         <Text style={styles.subDropdownText}>
-                          {document.name} - {document.id}
+                          {document.name}  {document.id}
                         </Text>
                         <Text style={styles.arrow}>
                           {document.id === 'Requerida' && isRequeridaOpen ? (
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
   mainDropdownText: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: width * 0.07,
+    fontSize: width * 0.06,
     marginLeft: width * 0.05,
   },
   arrow: {
@@ -411,7 +411,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: width * 0.62,
+    marginTop: height * 0.32,
     elevation: 3,
     width: '100%',
   },

@@ -16,7 +16,7 @@ const { width, height } = Dimensions.get('window');
 
 export default function CombustibleInfoScreen() {
     useEffect(() => {
-        StatusBar.setHidden(true);
+        StatusBar.setHidden(false);
         StatusBar.setBackgroundColor('transparent');
         StatusBar.setBarStyle('light-content');
     }, []);
