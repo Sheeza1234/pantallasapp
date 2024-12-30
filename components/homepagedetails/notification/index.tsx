@@ -134,12 +134,20 @@ export default function NoticicationInfoScreen() {
                             <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
                         </View>
                         <View style={styles.mainDropdownWrapper}>
-
-                            <View style={styles.iconContainer}>
+                             <View style={[
+                                             styles.iconContainer,
+                                             openSubDropdown
+                                               ? { backgroundColor: '#0066FF' } // Blue when a sub-dropdown is open
+                                               : isMainDropdownOpen
+                                                 ? { backgroundColor: '#84898b' } // Silver when the main dropdown is open
+                                                 : {}, // Default color otherwise
+                                           ]}>
+                            <View style={styles.iconContainer1}>
                                 <Image
                                     source={require('../../../assets/images/Iconos/PNG/Documenatcion.png')}
                                     style={styles.iconImage}
                                 />
+                                </View>
                             </View>
                             <TouchableOpacity
                                 style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
@@ -148,7 +156,7 @@ export default function NoticicationInfoScreen() {
 
                                 <Text style={styles.mainDropdownText}>NOTIFICACIONES</Text>
                                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                                    <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                                 ) : (
                                     <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                                 )}</Text>
@@ -297,7 +305,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     backgroundImage: {
-        flex: 1, width: '100 %', opacity: 0.3
+        flex: 1, width: '100 %'
     },
     overlayImage: {
         flex: 1,
@@ -330,16 +338,27 @@ const styles = StyleSheet.create({
     mainDropdownOpen: {
         backgroundColor: '#84898b',
     },
-    iconContainer: {
-        width: width * 0.18,
-        height: width * 0.18,
+    iconContainer1: {
+        width: width * 0.145,
+        height: width * 0.145,
         borderRadius: width * 0.1,
         backgroundColor: 'white',
         alignItems: 'center',
         marginLeft: width * 0.015,
+        marginTop: height * 0.006,
         zIndex: 1,
         position: 'absolute',
-    },
+      },
+      iconContainer: {
+        width: width * 0.17,
+        height: width * 0.17,
+        borderRadius: width * 0.1,
+        backgroundColor: '#0066FF',
+        alignItems: 'center',
+        marginLeft: width * 0.015,
+        zIndex: 1,
+        position: 'absolute',
+      },
     mainDropdown: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -354,9 +373,8 @@ const styles = StyleSheet.create({
         zIndex: 0,
     },
     iconImage: {
-        width: width * 0.4,
-        height: height * 0.1,
-        resizeMode: 'contain',
+        width: width * 0.2,
+        height: height * 0.07,
     },
     mainDropdownText: {
         color: 'white',

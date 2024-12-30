@@ -99,12 +99,19 @@ export default function GastrosInfoScreen() {
                         </View>
                         <View style={styles.mainDropdownWrapper}>
                             {/* Circle (Icon) */}
-                            <View style={styles.iconContainer}>
+                            <View style={[
+                                styles.iconContainer,
+                                isAlfaOpen
+                                    ? { backgroundColor: '#0066FF' }
+                                    : isMainDropdownOpen
+                                        ? { backgroundColor: '#84898b' }
+                                        : {},
+                            ]}>
                                 <View style={styles.iconContainer1}>
-                                <Image
-                                    source={require('../../../assets/images/Iconos/PNG/Gastos.png')}
-                                    style={styles.iconImage}
-                                />
+                                    <Image
+                                        source={require('../../../assets/images/Iconos/PNG/Gastos.png')}
+                                        style={styles.iconImage}
+                                    />
                                 </View>
                             </View>
 
@@ -149,7 +156,6 @@ export default function GastrosInfoScreen() {
                                                 </Text>
                                             </TouchableOpacity>
 
-
                                             {/* Sub-Dropdown Content */}
                                             {document.id === 'combustible' && isAlfaOpen && (
                                                 <View>
@@ -168,7 +174,9 @@ export default function GastrosInfoScreen() {
                                                                     color="#0066FF"
                                                                 />
                                                             </TouchableOpacity>
+
                                                         </View>
+
                                                     ))}
                                                 </View>
                                             )}
@@ -200,7 +208,45 @@ export default function GastrosInfoScreen() {
                                             )}
                                         </View>
                                     ))}
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <TouchableOpacity style={styles.details}>
+                                            <Text style={styles.subDropdownText2}>Dettale</Text>
+                                            <ChevronDown
+                                                width={width * 0.09}
+                                                height={width * 0.09}
+                                                color="white"
+                                            />
 
+                                        </TouchableOpacity>
+                                        <TouchableOpacity style={styles.details}>
+                                            <Text style={styles.subDropdownText2}>Historial</Text>
+                                            <ChevronDown
+                                                width={width * 0.09}
+                                                height={width * 0.09}
+                                                color="white"
+                                            />
+
+                                        </TouchableOpacity>
+                                    </View>
+                                    <View style={styles.singleBox}>
+                                        {/* Editar Button */}
+                                        <TouchableOpacity style={styles.button}>
+                                            <Image
+                                                source={require('../../../assets/images/editar.jpg')} // Replace with your image path
+                                                style={styles.icon}
+                                            />
+                                            <Text style={styles.buttonText}>Editar</Text>
+                                        </TouchableOpacity>
+
+                                        {/* Notas Button */}
+                                        <TouchableOpacity style={styles.button}>
+                                            <Image
+                                                source={require('../../../assets/images/notes.png')} // Replace with your image path
+                                                style={styles.icon}
+                                            />
+                                            <Text style={styles.buttonText}>Notas</Text>
+                                        </TouchableOpacity>
+                                    </View>
 
                                 </View>
                             )}
@@ -256,7 +302,7 @@ const styles = StyleSheet.create({
         width: width * 0.17,
         height: width * 0.17,
         borderRadius: width * 0.1,
-        backgroundColor: 'silver',
+        backgroundColor: '#0066FF',
         alignItems: 'center',
         marginLeft: width * 0.015,
         zIndex: 1,
@@ -285,6 +331,18 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginTop: -height * 0.045,
         zIndex: 0,
+    },
+    details: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: height * 0.004,
+        margin: width * 0.027,
+        backgroundColor: '#0066FF',
+        borderWidth: 1,
+        borderColor: '#0066FF',
+        borderRadius: 10,
+        width: '43%',
     },
     iconImage: {
         width: width * 0.2,
@@ -373,6 +431,12 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: width * 0.03,
     },
+    subDropdownText2: {
+        fontSize: width * 0.037,
+        fontWeight: '800',
+        color: 'white',
+        marginLeft: width * 0.03,
+    },
     subItem: {
         fontSize: width * 0.045,
         fontWeight: '800',
@@ -390,7 +454,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        marginTop: width * 0.3,
+        marginTop: width * 0.07,
         elevation: 3,
         width: '100%',
     },

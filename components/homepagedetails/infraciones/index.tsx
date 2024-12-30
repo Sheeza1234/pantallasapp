@@ -87,14 +87,22 @@ export default function InfracionesInfoScreen() {
             </View>
             <View style={styles.mainDropdownWrapper}>
               {/* Circle (Icon) */}
-              <View style={styles.iconContainer}>
+                <View style={[
+                              styles.iconContainer,
+                              openSubDropdown
+                                ? { backgroundColor: '#0066FF' } // Blue when a sub-dropdown is open
+                                : isMainDropdownOpen
+                                  ? { backgroundColor: '#84898b' } // Silver when the main dropdown is open
+                                  : {}, // Default color otherwise
+                            ]}>
+              <View style={styles.iconContainer1}>
                 <Image
                   source={require('../../../assets/images/Iconos/PNG/Infracciones.png')}
                   style={styles.iconImage}
                 />
               </View>
 
-
+              </View>
               <TouchableOpacity
                 style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
                 onPress={toggleMainDropdown}
@@ -102,7 +110,7 @@ export default function InfracionesInfoScreen() {
 
                 <Text style={styles.mainDropdownText}>INFRACCIONES</Text>
                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                  <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                  <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                 ) : (
                   <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                 )}</Text>
@@ -124,9 +132,12 @@ export default function InfracionesInfoScreen() {
                         }}
                       >
                         <Text style={styles.subDropdownText}>
-                          {document.name} - {document.id}
+                          {document.name}
                         </Text>
                         <Text style={styles.arrow}>
+                        <Text style={styles.subDropdownText}>
+                          {document.id}
+                        </Text>
                           {document.id === 'AA275HT' && isAlfaOpen ? (
                             <ChevronUp width={width * 0.09} height={width * 0.09} color="#0066FF" />
                           ) : (
@@ -256,7 +267,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
   },
   mainDropdownOpen: {
-    backgroundColor: 'silver',
+    backgroundColor: '#84898b',
   },
   backgroundImageStyle: {
     opacity: 0.1,
@@ -266,11 +277,22 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     zIndex: 1,
   },
-  iconContainer: {
-    width: width * 0.18,
-    height: width * 0.18,
+  iconContainer1: {
+    width: width * 0.145,
+    height: width * 0.145,
     borderRadius: width * 0.1,
     backgroundColor: 'white',
+    alignItems: 'center',
+    marginLeft: width * 0.015,
+    marginTop: height * 0.006,
+    zIndex: 1,
+    position: 'absolute',
+  },
+  iconContainer: {
+    width: width * 0.17,
+    height: width * 0.17,
+    borderRadius: width * 0.1,
+    backgroundColor: '#0066FF',
     alignItems: 'center',
     marginLeft: width * 0.015,
     zIndex: 1,
@@ -290,9 +312,8 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   iconImage: {
-    width: width * 0.4,
-    height: height * 0.1,
-    resizeMode: 'contain',
+    width: width * 0.19,
+    height: height * 0.07,
   },
   mainDropdownText: {
     color: 'white',

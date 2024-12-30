@@ -69,7 +69,7 @@ export default function RegisterScreen() {
                     resizeMode="cover"
                 >
                     {/* Translucent overlay */}
-                    <View style={styles.overlay} />
+                    <View />
                     <View style={styles.borderedContainer}>
                         <ScrollView
                             contentContainerStyle={styles.scrollContent}
@@ -162,10 +162,6 @@ const styles = StyleSheet.create({
     },
     backgroundImage: {
         flex: 1,
-    },
-    overlay: {
-        ...StyleSheet.absoluteFillObject,
-        backgroundColor: 'rgba(9,109,249,0.9)',
     },
     keyboardView: {
         flex: 1,

@@ -105,14 +105,14 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#0066FF',
-    paddingVertical: height * 0.01, // Make vertical padding responsive
+    paddingVertical: height * 0.01, 
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    marginBottom: height * 0.01, // Make margin responsive
-    marginTop: height * 0.01, // Make margin responsive
-    marginLeft: width * 0.03, // Make margin responsive
+    marginBottom: height * 0.01, 
+    marginTop: height * 0.01, 
+    marginLeft: width * 0.03, 
     width: '93%',
-    height: height * 0.1, // Use screen height to adjust header height
+    height: height * 0.1, 
   },
   headerText: {
     color: 'white',
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    paddingHorizontal: width * 0.05, // Adjust horizontal padding
+    paddingHorizontal: width * 0.05, 
   },
   gridItem: {
     width: width * 0.36,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: height * 0.01, // Responsive vertical margin
+    marginVertical: height * 0.01,
     borderWidth: 2,
     borderColor: 'silver',
     shadowColor: '#000',
@@ -143,11 +143,11 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   icon: {
-    width: width * 0.4, // Make icon size responsive
-    height: width * 0.27, // Adjust height proportionally
+    width: width * 0.4, 
+    height: width * 0.27, 
   },
   label: {
-    fontSize: width * 0.04, // Font size responsive to width
+    fontSize: width * 0.04, 
     fontWeight: '500',
     textAlign: 'center',
     color: '#333',
@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: '#000',
-    paddingVertical: height * 0.02, // Responsive padding
-    paddingBottom: Platform.OS === 'ios' ? height * 0.025 : 0, // iOS padding adjustment
+    paddingVertical: height * 0.02, 
+    paddingBottom: Platform.OS === 'ios' ? height * 0.025 : 0, 
   },
   button: {
     padding: width * 0.04, // Responsive padding
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
   },
   borderedContainer: {
     flex: 1,
-    margin: width * 0.05, // Responsive margin
+    margin: width * 0.05, 
     marginBlockEnd: 0,
     borderWidth: 1,
     borderColor: '#0098FE',

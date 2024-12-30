@@ -201,5 +201,16 @@ const styles = StyleSheet.create({
     toogleicon: {
         marginLeft: scale(10), // Scaled margin
     },
+    borderedContainer: {
+        flex: 1,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
+        borderWidth: 1,
+        borderColor: '#0098FE',
+        borderRadius: 25,
+        overflow: 'hidden',
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      },
 });
 export default Navbar

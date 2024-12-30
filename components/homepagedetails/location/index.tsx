@@ -100,13 +100,21 @@ export default function LocationInfoScreen() {
                         </View>
                         <View style={styles.mainDropdownWrapper}>
                             {/* Circle (Icon) */}
-                            <View style={styles.iconContainer}>
+                             <View  style={[
+                                styles.iconContainer,
+                                openSubDropdown
+                                  ? { backgroundColor: '#0066FF' } // Blue when a sub-dropdown is open
+                                  : isMainDropdownOpen
+                                  ? { backgroundColor: '#84898b' } // Silver when the main dropdown is open
+                                  : {}, // Default color otherwise
+                              ]}>
+                            <View style={styles.iconContainer1}>
                                 <Image
                                     source={require('../../../assets/images/Iconos/PNG/Geolocalizacion.png')}
                                     style={styles.iconImage}
                                 />
                             </View>
-
+                            </View>
 
                             <TouchableOpacity
                                 style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
@@ -200,15 +208,26 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         zIndex: 1,
     },
-    iconContainer: {
-        width: width * 0.18,
-        height: width * 0.18,
+    iconContainer1: {
+        width: width * 0.145,
+        height: width * 0.145,
         borderRadius: width * 0.1,
         backgroundColor: 'white',
         alignItems: 'center',
         marginLeft: width * 0.015,
+        marginTop: height * 0.006,
         zIndex: 1,
         position: 'absolute',
+    },
+    iconContainer: {
+      width: width * 0.17,
+      height: width * 0.17,
+      borderRadius: width * 0.1,
+      backgroundColor: '#0066FF',
+      alignItems: 'center',
+      marginLeft: width * 0.015,
+      zIndex: 1,
+      position: 'absolute',
     },
     itemContainer: {
         flexDirection: 'row',
@@ -250,9 +269,9 @@ const styles = StyleSheet.create({
         elevation: 10,
     },
     iconImage: {
-        width: width * 0.8,
-        height: height * 0.09,
-        resizeMode: 'contain',
+        width: width * 0.2,
+        height: width * 0.15,
+        // resizeMode: 'contain',
     },
     mainDropdownText: {
         color: 'white',
@@ -274,7 +293,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-    },
+      },
     icons: {
         flexDirection: 'row',
         borderRadius: 50,

@@ -201,12 +201,15 @@ const styles = StyleSheet.create({
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
-    },
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      },
     icons: {
         flexDirection: 'row',
         borderRadius: 50,

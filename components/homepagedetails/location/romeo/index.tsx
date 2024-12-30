@@ -77,10 +77,14 @@ export default function RomeoInfoScreen() {
                     style={styles.location}
                     source={require('../../../../assets/images/map.jpg')}
                 />
-                <View style={styles.locationtext}><Text style={styles.locatext}>Ubicacion de mi vehiculo</Text>
-                    <Text style={styles.lotext}>Calle Urquiza e/ Lrigyoen y Gallardo</Text>
+                <TouchableOpacity style={styles.ubra}>
+                <View style={styles.locationtext}>
+                    <Text style={styles.locatext}>Ubicacion de mi vehiculo</Text>
+                    <Text style={styles.lotext}><Image style={styles.locimage} source={require('../../../../assets/images/location.png')}/>Calle Urquiza e/ Lrigyoen y Gallardo</Text>
                     <Text style={styles.lotext}>Videma- Rio Negro</Text></View>
+                    </TouchableOpacity>
             </View>
+            
             <Navbar />
         </SafeAreaView>
     );
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
     },
     iconImage: {
         width: width * 0.08,
-        height: height * 0.1,
+        height: height * 0.3,
         resizeMode: 'contain',
     },
     mainDropdownText: {
@@ -104,20 +108,38 @@ const styles = StyleSheet.create({
     },
     location:
     {
-        width: width * 0.9,
-        height: height * 0.4
+        width: width * 0.84,
+        height: height * 0.55,
+        marginLeft:width*0.03
+    },
+    locimage:{
+         width:width*0.04,
+         height:height*0.025
     },
     borderedContainer: {
         flex: 1,
-        margin: width * 0.05,
+        margin: width * 0.05, // Responsive margin
+        marginBlockEnd: 0,
         borderWidth: 1,
-        borderColor: '#f8f9fa',
-        borderRadius: 15,
+        borderColor: '#0098FE',
+        borderRadius: 25,
         overflow: 'hidden',
-    },
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+      },
     locationtext: {
         justifyContent: 'center',
+        marginTop:width*0.02,
+        fontSize:width*0.3,
         alignItems: 'center',
+
+    },
+    ubra:{
+        backgroundColor:'silver',
+        borderRadius:width*0.03,
+        marginLeft:width*0.05,
+        width:width*0.8,
+        height:height*0.18,
 
     },
     header: {
@@ -162,13 +184,14 @@ const styles = StyleSheet.create({
     },
     lotext:
     {
-        fontSize: width * 0.03,
-        fontWeight: '500'
+        fontSize: width * 0.045,
+        fontWeight: '500',
+        marginBottom:width*0.04
     },
     locatext:
     {
-        fontSize: width * 0.06,
-        fontWeight: '500'
+        fontSize: width * 0.05,
+        fontWeight: '600'
     },
 
 });

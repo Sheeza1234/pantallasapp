@@ -123,19 +123,30 @@ export default function ServiciosInfoScreen() {
                 resizeMode="cover"
             >
                 <ImageBackground
-                    source={isMainDropdownOpen
-                        ? require('../../../assets/images/servicos1.jpg') // Change to the new overlay image
-                        : require('../../../assets/images/servicios.jpg')} // Original overlay image
+                    source={isAlfaRomeoOpen // Check if any sub-dropdown is open
+                        ? require('../../../assets/images/servicios.jpg') : isMainDropdownOpen
+                            ? require('../../../assets/images/servicos1.jpg')
+                            : require('../../../assets/images/servicios.jpg')}
                     style={styles.overlayImage}
                 >
                     <View style={styles.borderedContainer}>
-                        <View style={styles.header}>
+                        <View style={[
+              styles.header,
+              isAlfaRomeoOpen && { backgroundColor: 'silver' }, 
+            ]}>
                             <Text style={styles.headerText}>INFORMACIÓN </Text>
                             <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
                         </View>
                         <View style={styles.mainDropdownWrapper}>
 
-                            <View style={styles.iconContainer}>
+                            <View style={[
+                                styles.iconContainer,
+                                isAlfaRomeoOpen
+                                    ? { backgroundColor: '#0066FF' } // Blue when a sub-dropdown is open
+                                    : isMainDropdownOpen
+                                        ? { backgroundColor: '#84898b' } // Silver when the main dropdown is open
+                                        : {}, // Default color otherwise
+                            ]}>
                                 <View style={styles.iconContainer1}>
                                     <Image
                                         source={require('../../../assets/images/Iconos/PNG/Servicios.png')}
@@ -145,7 +156,11 @@ export default function ServiciosInfoScreen() {
                             </View>
 
                             <TouchableOpacity
-                                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                                             style={[
+                                                styles.mainDropdown,
+                                                isMainDropdownOpen && styles.mainDropdownOpen,
+                                                isAlfaRomeoOpen && { backgroundColor: '#0066FF' }, 
+                                              ]} 
                                 onPress={toggleMainDropdown}
                             >
 
@@ -494,14 +509,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: '#0066FF',
-        paddingVertical: height * 0.02,
-        paddingHorizontal: width * 0.04,
-        width: '83%',
+        padding: height * 0.02,
+        width: '82%',
         marginLeft: width * 0.13,
-        borderRadius: 15,
-        marginTop: -height * 0.045,
+        borderRadius: 10,
+        marginTop: height * -0.048,
         zIndex: 0,
-    },
+      },
     iconImage: {
         width: width * 0.2,
         height: width * 0.15,

@@ -23,6 +23,16 @@ const vehicles = [
   { name: 'Alfa Romeo', id: 'AA275HT' },
   { name: 'Toyota', id: 'AB369ES' },
 ];
+const documents = [
+  { name: 'Fabricante', id: '                     Alfa Romeo' },
+  { name: 'Modelo', id: '                             Mito' },
+  { name: 'Numero de Chasis', id: '   1HGBH41JXMN109186' },
+  { name: 'Numero de  Motor', id: '        52WVC10338' },
+  { name: 'Ano de Fabricacion', id: '             2019' },
+  { name: 'Ano de Patentamiento', id: '        2020' },
+  { name: 'Pntente', id: '                          AA275HT' },
+  { name: 'Tipo de combustible', id: '       Nafta Infinia' },
+]
 const { width, height } = Dimensions.get('window')
 export default function VehicleInfoScreen() {
   useEffect(() => {
@@ -51,34 +61,52 @@ export default function VehicleInfoScreen() {
       >
 
         <ImageBackground
-          source={isMainDropdownOpen
-            ? require('../../../assets/images/vehicles1.jpg') // Change to the new overlay image
-            : require('../../../assets/images/vehicles.jpg')} // Original overlay image
+          source={openSubDropdown // Check if any sub-dropdown is open
+            ? require('../../../assets/images/vehicles.jpg') : isMainDropdownOpen
+              ? require('../../../assets/images/vehicles1.jpg') // Change to the new overlay image
+              : require('../../../assets/images/vehicles.jpg')}
+          // Original overlay image
           style={styles.overlayImage}
         >
           <View style={styles.borderedContainer}>
-            <View style={styles.header}>
+            <View style={[
+              styles.header,
+              openSubDropdown && { backgroundColor: 'silver' },
+            ]}>
               <Text style={styles.headerText}>INFORMACIÓN </Text>
               <Text style={styles.headerText}> VEHÍCULO PERSONAL </Text>
             </View>
             <View style={styles.mainDropdownWrapper}>
               {/* Circle (Icon) */}
-              <View style={styles.iconContainer}>
-                <Image
-                  source={require('../../../assets/images/Iconos/PNG/Mis_Vehiculos.png')}
-                  style={styles.iconImage}
-                />
+              <View style={[
+                styles.iconContainer,
+                openSubDropdown
+                  ? { backgroundColor: '#0066FF' } // Blue when a sub-dropdown is open
+                  : isMainDropdownOpen
+                    ? { backgroundColor: '#84898b' } // Silver when the main dropdown is open
+                    : {}, // Default color otherwise
+              ]}>
+                <View style={styles.iconContainer1}>
+                  <Image
+                    source={require('../../../assets/images/Iconos/PNG/Mis_Vehiculos.png')}
+                    style={styles.iconImage}
+                  />
+                </View>
               </View>
 
               {/* MIS VEHÍCULOS Container */}
               <TouchableOpacity
-                style={[styles.mainDropdown, isMainDropdownOpen && styles.mainDropdownOpen]} // Add dynamic style for open state
+                style={[
+                  styles.mainDropdown,
+                  isMainDropdownOpen && styles.mainDropdownOpen,
+                  openSubDropdown && { backgroundColor: '#0066FF' },
+                ]}
                 onPress={toggleMainDropdown}
               >
 
                 <Text style={styles.mainDropdownText}>MIS VEHÍCULOS</Text>
                 <Text style={styles.arrow}> {isMainDropdownOpen ? (
-                  <ChevronUp width={width * 0.08} height={width * 0.08} color="#0066FF" />
+                  <ChevronUp width={width * 0.08} height={width * 0.08} color="white" />
                 ) : (
                   <ChevronDown width={width * 0.08} height={width * 0.08} color="#B7B7B7" />
                 )}</Text>
@@ -94,12 +122,12 @@ export default function VehicleInfoScreen() {
                         onPress={() => toggleSubDropdown(vehicle.name)}
                       >
                         <Text style={styles.subDropdownText}>
-                          {vehicle.name} 
+                          {vehicle.name}
                         </Text>
                         <Text style={styles.arrow}>
-                        <Text style={styles.subDropdownText}>
-                          {vehicle.id} 
-                        </Text>
+                          <Text style={styles.subDropdownText}>
+                            {vehicle.id}
+                          </Text>
                           {openSubDropdown === vehicle.name ? (
                             <ChevronUp
                               width={width * 0.09}
@@ -119,14 +147,13 @@ export default function VehicleInfoScreen() {
                       {/* Sub-Dropdown Content */}
                       {openSubDropdown === vehicle.name && (
                         <View>
-                          <Text style={styles.subItem}>Fabricante:<Text style={styles.item}>Alfa Romeo </Text></Text>
-                          <Text style={styles.subItem}>Modelo:<Text style={styles.item}>Mito </Text></Text>
-                          <Text style={styles.subItem}>Numero de Chasis<Text style={styles.item}>1HGBH41JXMN109186 </Text></Text>
-                          <Text style={styles.subItem}>Numero de  Motor<Text style={styles.item}>52WVC10338 </Text></Text>
-                          <Text style={styles.subItem}>Ano de Fabricacion<Text style={styles.item}>2019 </Text></Text>
-                          <Text style={styles.subItem}>Ano de Patentamiento<Text style={styles.item}>2020 </Text></Text>
-                          <Text style={styles.subItem}>Patente<Text style={styles.item}>AA275HT </Text></Text>
-                          <Text style={styles.subItem}>Tipo de Combustible<Text style={styles.item}>Nafta Infinia </Text></Text>
+
+                          {documents.map((vehicles) => (
+                            <View style={styles.alfa}>
+                              <Text style={styles.subItem}>{vehicles.name}:</Text>
+                              <Text style={styles.subDropdownText1}>{vehicles.id}</Text>
+                            </View>
+                          ))}
                           <View style={styles.singleBox}>
                             {/* Editar Button */}
                             <TouchableOpacity style={styles.button}>
@@ -194,10 +221,34 @@ const styles = StyleSheet.create({
 
   },
   mainDropdownOpen: {
-    backgroundColor: 'silver',
+    backgroundColor: '#84898b',
+  },
+  alfa: {
+    flexDirection: 'row',
   },
   keyboardView: {
     flex: 1,
+  },
+  iconContainer1: {
+    width: width * 0.145,
+    height: width * 0.145,
+    borderRadius: width * 0.1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    marginLeft: width * 0.015,
+    marginTop: height * 0.006,
+    zIndex: 1,
+    position: 'absolute',
+  },
+  iconContainer: {
+    width: width * 0.17,
+    height: width * 0.17,
+    borderRadius: width * 0.1,
+    backgroundColor: '#0066FF',
+    alignItems: 'center',
+    marginLeft: width * 0.015,
+    zIndex: 1,
+    position: 'absolute',
   },
   item: {
     color: '#0066FF',
@@ -219,16 +270,6 @@ const styles = StyleSheet.create({
 
 
   },
-  iconContainer: {
-    width: width * 0.2,
-    height: width * 0.185,
-    borderRadius: width * 0.1,
-    backgroundColor: 'white',
-    alignItems: 'center',
-    marginLeft: width * 0.01,
-    zIndex: 1,
-    position: 'absolute',
-  },
   mainDropdown: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -238,13 +279,13 @@ const styles = StyleSheet.create({
     width: '82%',
     marginLeft: width * 0.13,
     borderRadius: 10,
-    marginTop: height * -0.045,
+    marginTop: height * -0.048,
     zIndex: 0,
   },
   iconImage: {
-    width: width * 0.2,
-    height: height * 0.1,
-    resizeMode: 'contain',
+    width: width * 0.15,
+    height: width * 0.15,
+    // resizeMode: 'contain',
   },
   mainDropdownText: {
     color: 'white',
@@ -305,12 +346,21 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#333',
   },
+  subDropdownText1: {
+    fontSize: width * 0.05,
+    fontWeight: '600',
+    color: '#0066FF',
+    // textAlign: 'center',
+    alignSelf: 'center',
+    width: '100%',
+  },
   subItem: {
+    flexDirection: 'row',
     fontSize: width * 0.043,
     fontWeight: '800',
     color: '#555',
-    paddingVertical: height * 0.007,
-    marginLeft: width * 0.05,
+    marginLeft: width * 0.03,
+    paddingVertical: height * 0.007
   },
   singleBox: {
     flexDirection: 'row',
@@ -322,7 +372,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginTop: height * 0.115,
+    marginTop: height * 0.125,
     elevation: 3,
   },
   singleBoxs: {

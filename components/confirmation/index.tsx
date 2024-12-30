@@ -57,7 +57,7 @@ export default function AccountConfirmation() {
   return (
     <SafeAreaView style={styles.container}>
       <ImageBackground
-        source={require('../../assets/images/background1.jpg')}
+        source={require('../../assets/images/background.jpg')}
         style={styles.backgroundImage}
         resizeMode="cover"
       >
@@ -113,29 +113,26 @@ const styles = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    opacity: 0.3,
+    // opacity: 0.3,
   },
 
   scrollContent: {
     flexGrow: 1,
-    paddingHorizontal: width * 0.05,  // Adjust horizontal padding based on screen width
-    // paddingVertical: height * 0.05,   // Adjust vertical padding based on screen height
+    paddingHorizontal: width * 0.05,  
     alignItems: 'center',
   },
   title: {
     color: 'white',
-    fontSize: width * 0.07,   // Font size adjusted relative to screen width
+    fontSize: width * 0.07,   
     fontWeight: 'bold',
-    marginTop: height * 0.05,  // Margin top based on screen height
+    marginTop: height * 0.05,  
   },
   logoContainer: {
     alignItems: 'center',
-    // marginBottom: height * 0.01,  // Margin bottom adjusted for responsiveness
   },
   formContainer: {
     width: '100%',
-    gap: height * 0.015,  // Adjust gap between form elements based on screen height
-    // marginBottom: height * 0.05,  // Margin bottom adjusted for responsiveness
+    gap: height * 0.015,  
   },
   fieldContainer: {
     width: '80%',
